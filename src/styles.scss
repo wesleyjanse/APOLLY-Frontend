@@ -1,1 +1,85 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import '~@angular/material/theming';
+@import "~bootstrap/scss/bootstrap-grid";
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none; /* no underline */
+  }
+
+$mat-myapp-primary: (
+    50 : #eaf4fa,
+    100 : #cae3f2,
+    200 : #a7d0e9,
+    300 : #83bde0,
+    400 : #69afda,
+    500 : #4ea1d3,
+    600 : #4799ce,
+    700 : #3d8fc8,
+    800 : #3585c2,
+    900 : #2574b7,
+    A100 : #f4faff,
+    A200 : #c1e1ff,
+    A400 : #8ec8ff,
+    A700 : #74bcff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+$mat-myapp-accent: (
+    50 : #fffaed,
+    100 : #fff4d1,
+    200 : #ffecb3,
+    300 : #ffe494,
+    400 : #ffdf7d,
+    500 : #ffd966,
+    600 : #ffd55e,
+    700 : #ffcf53,
+    800 : #ffca49,
+    900 : #ffc038,
+    A100 : #ffffff,
+    A200 : #ffffff,
+    A400 : #fff5e1,
+    A700 : #ffedc8,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #000000,
+        900 : #000000,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+$primary: mat-palette($mat-myapp-primary);
+$accent: mat-palette($mat-myapp-accent);
+$theme: mat-light-theme($primary, $accent);
+
+@include angular-material-theme($theme);

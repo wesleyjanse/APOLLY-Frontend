@@ -1,0 +1,57 @@
+$breakSmall: 576px;
+$breakMedium: 768px;
+$breakLarge: 992px;
+$breakExtraLarge: 1200px;
+
+#tekstHome{
+    position: absolute;
+    left: 0;
+    top: 200px;
+    z-index: 2;
+}
+
+.imageParent {
+  position: relative;
+  overflow: hidden;
+  height: calc(100% - 64px);
+  width: 100%;
+}
+
+#image {
+  width: 100%;
+  background-repeat: no-repeat;
+  position: absolute;
+  background-position: bottom right;
+  background-size: contain;
+  background-image: url("../../assets/iphone.png");
+
+  @media screen and (min-width: $breakMedium) {
+    height: 500px;
+    right: -160px;
+    transform: rotate(5deg);
+    bottom: 0px;
+  }
+
+  @media screen and (min-width: $breakLarge){
+    height: 600px;
+    right: -80px;
+    transform: rotate(5deg);
+    bottom: 15px;
+  }
+
+  @media screen and (min-width: $breakExtraLarge){
+    height: 700px;
+    right: -60px;
+    transform: rotate(5deg);
+    bottom: 15px;
+  }
+}
+
+
+:host .mat-flat-button {
+    border-radius: 12px !important;
+    background-color: #92d6ff;
+    color: white;
+    font-weight: 100;
+    font-size: 16px;
+  }

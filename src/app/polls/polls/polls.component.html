@@ -1,0 +1,32 @@
+<!-- <ul>
+  <li style="margin-top: 5px" *ngFor="let p of (polls | async)">{{p.poll.name}} --- {{ p.member.username }}</li>
+</ul> -->
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <mat-card class="jumbotron">
+        <h1 style="font-size: 28px;">Polls</h1>
+        <h3>Here you can find all public polls that you can vote on!</h3>
+      </mat-card>
+      <mat-grid-list [cols]="breakpoint" rowHeight="2:1" (window:resize)="onResize($event)" [gutterSize]="'10px'">
+        <mat-grid-tile *ngFor="let p of (polls | async)">
+          <mat-card>
+            <mat-card-title>
+              <mat-toolbar-row style="padding: 0;">
+                <span>{{p.poll.name}}</span>
+                <span class="spacer"></span>
+                <mat-icon class="icon" aria-hidden="false" aria-label="heart icon">favorite</mat-icon>
+                <mat-icon class="icon" aria-hidden="false" aria-label="delete icon">delete</mat-icon>
+              </mat-toolbar-row>
+            </mat-card-title>
+            <mat-card-subtitle>
+              Created by: {{ p.member.username }}
+            </mat-card-subtitle>
+
+          </mat-card>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </div>
+  </div>
+</div>

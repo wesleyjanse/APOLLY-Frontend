@@ -1,0 +1,59 @@
+<div class="jumbotron vertical-center">
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 offset-xl-4 offset-lg-3 offset-md-3">
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+          <mat-card class="login-card">
+            <mat-card-header>
+              <mat-card-title style="text-align: left;">Register</mat-card-title>
+              <mat-card-subtitle>Create an account</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+              <p>
+                <mat-form-field style="width: 100%;" appearance="outline">
+                  <mat-label>Username</mat-label>
+                  <input formControlName="username" type="text" name="username" matInput placeholder="Username">
+                  <mat-icon color="primary" matSuffix>account_circle</mat-icon>
+                </mat-form-field>
+              </p>
+              <p>
+                <mat-form-field style="width: 100%;" appearance="outline">
+                  <mat-label>Email</mat-label>
+                  <input formControlName="email" type="email" name="email" matInput placeholder="Email">
+                  <mat-icon color="primary" matSuffix>email</mat-icon>
+                </mat-form-field>
+              </p>
+              <p>
+                <mat-form-field style="width: 100%;" appearance="outline">
+                  <mat-label>Password</mat-label>
+                  <input formControlName="password" type="password" name="password" matInput placeholder="Password">
+                  <mat-error *ngIf="registerForm.hasError('required', 'password')">
+                    Please enter your new password
+                  </mat-error>
+                  <mat-icon color="primary" matSuffix>lock</mat-icon>
+
+                </mat-form-field>
+              </p>
+              <p>
+                <mat-form-field style="width: 100%;" appearance="outline">
+                  <mat-label>Confirm password</mat-label>
+                  <input formControlName="confirmPassword" [errorStateMatcher]="matcher" type="password" name="password" matInput
+                    placeholder="Confirm password">
+                    <mat-error *ngIf="registerForm.hasError('notSame')">
+                            Passwords do not match
+                          </mat-error>
+                  <mat-icon color="primary" matSuffix>lock</mat-icon>
+                  
+                </mat-form-field>
+              </p>
+            </mat-card-content>
+            <mat-card-actions>
+              <button mat-raised-button color="primary" style="width: 100%; color: white;" type="submit"
+                [disabled]="!registerForm.valid || submitted">Register</button>
+            </mat-card-actions>
+          </mat-card>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

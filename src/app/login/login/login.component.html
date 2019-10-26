@@ -1,0 +1,39 @@
+<div class="jumbotron vertical-center">
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 offset-xl-4 offset-lg-3 offset-md-3">
+        <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
+          <mat-card class="login-card">
+            <mat-card-header>
+              <mat-card-title style="text-align: left;">Login</mat-card-title>
+              <mat-card-subtitle style="text-align: left;">Enter your login details</mat-card-subtitle>
+              <mat-card-subtitle *ngIf="userCheck" style="color: red; text-align: left;">Username or password is incorrect!</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+              <p>
+                <mat-form-field style="width: 100%;" appearance="outline">
+                  <mat-label>Username</mat-label>
+                  <input required minlength="3" [(ngModel)]="model.username" type="text" name="username" matInput
+                    placeholder="Username">
+                  <mat-icon color="primary" matSuffix>account_circle</mat-icon>
+                </mat-form-field>
+              </p>
+              <p>
+                <mat-form-field style="width: 100%;" appearance="outline">
+                  <mat-label>Password</mat-label>
+                  <input required minlength="4" [(ngModel)]="model.password" type="password" name="password" matInput
+                    placeholder="Password">
+                  <mat-icon color="primary" matSuffix>lock</mat-icon>
+                </mat-form-field>
+              </p>
+            </mat-card-content>
+            <mat-card-actions>
+              <button mat-raised-button color="primary" style="width: 100%; color: white;" type="submit"
+                [disabled]="!loginForm.form.valid || submitted">Login</button>
+            </mat-card-actions>
+          </mat-card>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

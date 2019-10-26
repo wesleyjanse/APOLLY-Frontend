@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:100i,400&display=swap');
+
+* {
+  font-family: 'Roboto', sans-serif;
+  font-weight: lighter;
+}
+
+$breakSmall: 576px;
+$breakMedium: 768px;
+$breakLarge: 992px;
+$breakExtraLarge: 1200px;
+
+.phoneAndSlash {
+  background-position: 0px 0px;
+
+  @media screen and (min-width: $breakMedium) {
+    background-image: linear-gradient(60deg,
+        #FFFFFF 0px,
+        #FFFFFF 60%,
+        lighten(#B3894F, 7%) 60%,
+        #FCD59E 100%)
+  }
+
+  @media screen and (min-width: $breakExtraLarge) {
+    background-image: linear-gradient(50deg,
+        #FFFFFF 0px,
+        #FFFFFF 60%,
+        lighten(#B3894F, 7%) 60%,
+        #FCD59E 100%)
+  }
+}
+
+mat-icon {
+  font-family: 'Material Icons' !important;
+}
+
+.nav-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.sidenav-content {
+  height: 100%;
+}
+
+.nav-list {
+  padding: 15px;
+  display: block;
+  color: white;
+  text-align: center;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
+
+:host .mat-flat-button {
+  border-radius: 20px !important;
+  color: white;
+  font-weight: 100;
+  font-size: 16px;
+  height: 40px;
+  width: 100px;
+}
+
+.homeToolbar {
+  padding-top: 10px;
+  background: inherit !important;
+}
+
+#loggedInUser {
+  margin: 0;
+  padding: 0;
+  background: rgb(255, 255, 255);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, #4ea1d3 100%);
+  height: 150px;
+  width: 250px;
+  text-align: left;
+  position: relative;
+  p {
+    padding: 15px;
+    left: 0;
+    bottom: 0;
+    position: absolute;
+    color: white;
+    font-weight: 100;
+    span {
+      font-weight: bold;
+    }
+  }
+}
+
+
+mat-action-list button {
+  width: 100%;
+
+  mat-icon {
+    color: #4ea1d3;
+    margin-left: auto;
+  }
+}
+
+.footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  background-color: transparent;
+  text-align: left;
+}
