@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-import { MatFormFieldModule, MatInputModule, MatButtonModule } from '@angular/material';
-import { FormsModule,ReactiveFormsModule  } from '@angular/forms';
+import { MatFormFieldModule, MatInputModule, MatButtonModule, MatRadioModule } from '@angular/material';
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -8,14 +8,16 @@ import { FormsModule,ReactiveFormsModule  } from '@angular/forms';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatRadioModule
   ],
   exports: [
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatRadioModule
   ]
 })
 export class FormSharedModule { }

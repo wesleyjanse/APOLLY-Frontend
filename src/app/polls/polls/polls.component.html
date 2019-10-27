@@ -10,22 +10,11 @@
         <h3>Here you can find all public polls that you can vote on!</h3>
       </mat-card>
       <mat-grid-list [cols]="breakpoint" rowHeight="2:1" (window:resize)="onResize($event)" [gutterSize]="'10px'">
-        <mat-grid-tile *ngFor="let p of (polls | async)">
-          <mat-card>
-            <mat-card-title>
-              <mat-toolbar-row style="padding: 0;">
-                <span>{{p.poll.name}}</span>
-                <span class="spacer"></span>
-                <mat-icon class="icon" aria-hidden="false" aria-label="heart icon">favorite</mat-icon>
-                <mat-icon class="icon" aria-hidden="false" aria-label="delete icon">delete</mat-icon>
-              </mat-toolbar-row>
-            </mat-card-title>
-            <mat-card-subtitle>
-              Created by: {{ p.member.username }}
-            </mat-card-subtitle>
-
-          </mat-card>
-        </mat-grid-tile>
+          <ng-container *ngFor="let p of (polls | async)">
+            <mat-grid-tile *ngIf="!p.poll.private">
+              <app-poll-vote [name]="p.poll.name" [username]="p.member.username" [answers]=[p.poll.answers]></app-poll-vote>
+            </mat-grid-tile>
+          </ng-container>
       </mat-grid-list>
     </div>
   </div>

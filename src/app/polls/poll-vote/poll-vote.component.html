@@ -1,0 +1,22 @@
+<form [formGroup]="answerForm" (ngSubmit)="onSubmit()">
+  <mat-card>
+    <mat-card-title>
+      <span>{{ name }}</span>
+      <span class="spacer"></span>
+      <mat-icon class="icon" aria-hidden="false" aria-label="heart icon">favorite</mat-icon>
+    </mat-card-title>
+    <mat-card-subtitle style="padding-bottom: 5px;border-bottom: 1.5px solid #A3DCFF;">
+      Created by: {{ username }}
+    </mat-card-subtitle>
+    <mat-card-content>
+      <mat-radio-group formControlName="chosenAnswer" aria-labelledby="radio-group-label" class="radio-group">
+        <mat-radio-button *ngFor="let a of answers[0]" [value]="a.answerID" class="radio-button">
+          {{ a.possibleAnswer }}
+        </mat-radio-button>
+      </mat-radio-group>
+    </mat-card-content>
+    <mat-card-actions>
+      <button [disabled]="!answerForm.valid" mat-raised-button color="white" type="submit">Vote</button>
+    </mat-card-actions>
+  </mat-card>
+</form>

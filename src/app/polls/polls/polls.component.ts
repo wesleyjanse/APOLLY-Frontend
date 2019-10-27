@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PollService } from '../poll.service';
 import { Observable } from 'rxjs';
 import { PollMember } from '../../models/pollmember.model';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-polls',
@@ -13,15 +14,11 @@ export class PollsComponent implements OnInit {
   polls: Observable<PollMember[]>;
   breakpoint: number;
 
-  constructor(private _pollService: PollService) {
+  constructor(private _pollService: PollService, private fb: FormBuilder) {
     this.polls = this._pollService.getPolls();
   }
 
-  onClick(){
-    console.log(this.polls)
-  }
-
-  ngOnInit() { 
+  ngOnInit() {
     this.breakpoint = (window.innerWidth <= 990) ? 1 : 2;
   }
 
