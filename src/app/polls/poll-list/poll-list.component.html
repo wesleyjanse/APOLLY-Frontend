@@ -1,0 +1,73 @@
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      {{ name }} </mat-panel-title>
+    <mat-panel-description>
+      Created on: {{ createdOn | date }}
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <div class="row">
+    <div class="col-md-5">
+      <div *ngIf="!edit">
+        <mat-list>
+          <mat-list-item> Made by: {{ creator }}</mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item> Status: {{ private }}</mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item> Votes: {{ totalVotes }}</mat-list-item>
+        </mat-list>
+        <button *ngIf="creator == loggedInUsername" matTooltip="Edit" matTooltipPosition="below" (click)="onEditClick()" color="primary" mat-stroked-button>
+          <mat-icon>edit</mat-icon>
+        </button> &nbsp;
+        <button *ngIf="creator == loggedInUsername" matTooltip="Delete" matTooltipPosition="below" color="primary" mat-stroked-button>
+          <mat-icon>delete_outline</mat-icon>
+        </button>
+        <p style="color: red;" *ngIf="creator != loggedInUsername">
+            You did not create this poll, so you cannot edit or delete it.
+        </p>
+      </div>
+      <form *ngIf="edit" [formGroup]="editForm" (ngSubmit)="onSubmit()">
+        <mat-list>
+          <mat-list-item>
+            <mat-form-field>
+              <input formControlName="title" matInput placeholder="Title of the poll" type="text">
+              <span matPrefix>Title:&nbsp;</span>
+            </mat-form-field>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item>
+            <mat-slide-toggle formControlName="privateToggle" [color]="accent">
+              Private
+            </mat-slide-toggle>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item> Votes: {{ totalVotes }}</mat-list-item>
+        </mat-list>
+        <button matTooltip="Save" matTooltipPosition="below" type="submit" color="primary" mat-stroked-button>
+          <mat-icon>save_alt</mat-icon>
+        </button> &nbsp;
+        <button (click)="onCancelClick()" mat-stroked-button matTooltip="Cancel" matTooltipPosition="below" color="primary">
+          <mat-icon>backspace</mat-icon>
+        </button>
+      </form>
+    </div>
+    <div class="col-md-6 col-sm-12" style="margin: auto;">
+      <div class="row d-flex justify-content-center" style="padding: 5px 0px;">
+        <div class="col-md-3 col-sm-6" *ngFor="let poll of pollOptions">
+          <h3 style="font-weight: 100; text-align: center;">{{ poll }}</h3>
+        </div>
+      </div>
+      <div class="row d-flex justify-content-center pt-1">
+        <div class="col-md-3 col-xs-6" *ngFor="let poll of pollVotes">
+          <div
+            style="position: relative; width: 100px; height: 100px; display: flex; align-items: center; justify-content: center;">
+            <mat-progress-spinner style="margin: auto; width: 100px;height: 100px;position: absolute;top: 0;left: 0;"
+              [color]="'primary'" [mode]="'determinate'" [value]="poll">
+            </mat-progress-spinner>
+            <h1 style="font-weight: 100;">{{ poll }}%</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-expansion-panel>

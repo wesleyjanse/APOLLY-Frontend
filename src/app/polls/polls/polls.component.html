@@ -9,13 +9,13 @@
         <h1 style="font-size: 28px;">Polls</h1>
         <h3>Here you can find all public polls that you can vote on!</h3>
       </mat-card>
-      <mat-grid-list [cols]="breakpoint" rowHeight="2:1" (window:resize)="onResize($event)" [gutterSize]="'10px'">
-          <ng-container *ngFor="let p of (polls | async)">
-            <mat-grid-tile *ngIf="!p.poll.private">
-              <app-poll-vote [name]="p.poll.name" [username]="p.member.username" [answers]=[p.poll.answers]></app-poll-vote>
-            </mat-grid-tile>
-          </ng-container>
-      </mat-grid-list>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-md-6 col-xl-4" style="margin-bottom: 20px;" *ngFor="let p of (polls | async)">
+      <div *ngIf="!p.poll.private">
+        <app-poll-vote [name]="p.poll.name" [username]="p.member.username" [answers]=[p.poll.answers]></app-poll-vote>
+      </div>
     </div>
   </div>
 </div>

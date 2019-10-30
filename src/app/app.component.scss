@@ -10,6 +10,15 @@ $breakMedium: 768px;
 $breakLarge: 992px;
 $breakExtraLarge: 1200px;
 
+
+.logo{
+  margin: 0px;
+  width: 100px;
+  @media screen and (min-width: $breakSmall) {
+    margin: 15px;
+    width: 180px;
+  }
+}
 .phoneAndSlash {
   background-position: 0px 0px;
 

@@ -6,6 +6,8 @@ import { VoteService } from '../vote.service';
 import { Vote } from 'src/app/models/vote.model';
 import { AuthenticateService } from 'src/app/login/services/authenticate.service';
 import { Member } from 'src/app/models/member.model';
+import { Poll } from 'src/app/models/poll.model';
+import { PollService } from '../poll.service';
 
 @Component({
   selector: 'app-poll-vote',
@@ -14,7 +16,7 @@ import { Member } from 'src/app/models/member.model';
 })
 export class PollVoteComponent implements OnInit {
 
-  constructor(private fb: FormBuilder, private _voteService: VoteService, private _authenticateService: AuthenticateService) {
+  constructor(private fb: FormBuilder, private _voteService: VoteService, private _authenticateService: AuthenticateService, private _pollService: PollService) {
     this._authenticateService.isLoggedin.subscribe(e => {
       if (localStorage.getItem('member') != null) {
         this.member = JSON.parse(localStorage.getItem('member'));
@@ -22,22 +24,54 @@ export class PollVoteComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
+  onResize(event) {
+    this.pollTitleFontSize = (event.target.innerWidth <= 450) ? true : false;
+  }
   @Input() name: string;
   @Input() username: string;
   @Input() answers: Observable<Answer[]>;
 
+  submitted: boolean = false;
   pollID: number;
   member: Member;
   answerForm = this.fb.group({
     chosenAnswer: new FormControl('', Validators.required)
   });
 
+  poll: Poll;
+  alreadyVoted: boolean = false;
+  pollTitleFontSize: boolean = false;
+  pollOptions: string[] = [];
+  pollVotes: string[] = [];
 
   onSubmit() {
+    this.pollID = this.answers[0][0].pollID;
+    this.submitted = true;
     let newVote = new Vote(0, this.answerForm.get("chosenAnswer").value, this.member.memberID);
-    this._voteService.addVote(newVote).subscribe();
+
+    if (this.answers[0][0].votes.find(v => v.memberID == this.member.memberID) || this.answers[0][1].votes.find(v => v.memberID == this.member.memberID)) {
+      this.alreadyVoted = true;
+      this.countVotes()
+    } else {
+      this._voteService.addVote(newVote).subscribe(() => {
+      this.countVotes()
+      });
+    }
+  }
+
+  countVotes(){
+    this._pollService.getPoll(this.pollID).subscribe(result => {
+      this.poll = result;
+      var total: number = 0;
+      for (let i = 0; i < Object.keys(result.answers).length; i++) {
+          this.pollOptions.push(result.answers[i].possibleAnswer);
+          total += result.answers[i].votes.length
+      } 
+      for (let j = 0; j < this.pollOptions.length; j++) {
+          this.pollVotes.push(String(Math.floor((result.answers[j].votes.length / total) * 100)))
+      }
+    });
   }
 }

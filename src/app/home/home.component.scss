@@ -3,11 +3,18 @@ $breakMedium: 768px;
 $breakLarge: 992px;
 $breakExtraLarge: 1200px;
 
-#tekstHome{
+#tekstHome {
+  position: absolute;
+  left: 0;
+  top: 100px;
+  z-index: 2;
+
+  @media screen and (min-width: $breakSmall) {
     position: absolute;
     left: 0;
     top: 200px;
     z-index: 2;
+  }
 }
 
 .imageParent {
@@ -32,14 +39,14 @@ $breakExtraLarge: 1200px;
     bottom: 0px;
   }
 
-  @media screen and (min-width: $breakLarge){
+  @media screen and (min-width: $breakLarge) {
     height: 600px;
     right: -80px;
     transform: rotate(5deg);
     bottom: 15px;
   }
 
-  @media screen and (min-width: $breakExtraLarge){
+  @media screen and (min-width: $breakExtraLarge) {
     height: 700px;
     right: -60px;
     transform: rotate(5deg);
@@ -49,9 +56,9 @@ $breakExtraLarge: 1200px;
 
 
 :host .mat-flat-button {
-    border-radius: 12px !important;
-    background-color: #92d6ff;
-    color: white;
-    font-weight: 100;
-    font-size: 16px;
-  }
+  border-radius: 12px !important;
+  background-color: #92d6ff;
+  color: white;
+  font-weight: 100;
+  font-size: 16px;
+}

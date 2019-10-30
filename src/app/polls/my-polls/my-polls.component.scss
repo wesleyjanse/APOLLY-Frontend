@@ -1,0 +1,17 @@
+.icon {
+  padding: 0 14px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+mat-toolbar {
+    border-radius: 8px;
+    margin: 10px 0px;
+    color: lighten(black, 25);
+    background: linear-gradient(0deg, rgba(255,244,228,1) 0%, rgba(255,217,163,1) 100%);
+    mat-toolbar-row{
+        font-weight: 100;
+    }
+}

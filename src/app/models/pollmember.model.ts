@@ -5,7 +5,7 @@ export class PollMember {
     constructor(public pollMemberID: number,
         public pollID: number,
         public memberID: number,
-        public poll: Poll,
-        public member: Member
+        public poll?: Poll,
+        public member?: Member
         ) { }
 }

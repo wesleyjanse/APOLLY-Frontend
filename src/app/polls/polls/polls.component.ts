@@ -12,18 +12,12 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 export class PollsComponent implements OnInit {
 
   polls: Observable<PollMember[]>;
-  breakpoint: number;
 
   constructor(private _pollService: PollService, private fb: FormBuilder) {
     this.polls = this._pollService.getPolls();
   }
 
   ngOnInit() {
-    this.breakpoint = (window.innerWidth <= 990) ? 1 : 2;
-  }
 
-  onResize(event) {
-    this.breakpoint = (event.target.innerWidth <= 990) ? 1 : 2;
   }
-
 }

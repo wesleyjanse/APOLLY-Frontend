@@ -10,12 +10,14 @@ import { HomeComponent } from './home/home.component';
 import { PollsComponent } from './polls/polls/polls.component';
 import { PollsModule } from './polls/polls.module';
 import { RegisterComponent } from './login/register/register.component';
+import { MyPollsComponent } from './polls/my-polls/my-polls.component';
  
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'polls', component: PollsComponent },
+  { path: 'mypolls', component: MyPollsComponent },
   ];
 @NgModule({
   declarations: [

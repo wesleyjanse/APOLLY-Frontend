@@ -13,5 +13,4 @@ export class VoteService {
   addVote(vote: Vote){
     return this._httpClient.post<Vote>("https://localhost:44371/api/vote", vote);
   }
-
 }

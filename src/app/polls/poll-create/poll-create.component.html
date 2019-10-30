@@ -1,0 +1,38 @@
+<mat-horizontal-stepper linear="true" #stepper>
+  <mat-step [stepControl]="titleFormGroup">
+    <form [formGroup]="titleFormGroup">
+      <ng-template matStepLabel>What is the title of your poll?</ng-template>
+      <mat-form-field>
+        <input matInput placeholder="Title" formControlName="titleCtrl">
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="answerFormGroup">
+    <form [formGroup]="answerFormGroup">
+      <ng-template matStepLabel>Fill in possible answers (Seperated by comma's)</ng-template>
+      <mat-form-field>
+        <input matInput placeholder="E.g. Yes, No, Maybe" formControlName="answerCtrl" required>
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="submitFormGroup">
+    <form [formGroup]="submitFormGroup" (ngSubmit)="onSubmit()">
+      <ng-template matStepLabel>Privacy</ng-template>
+      <p>Do you want your poll to be private or public?</p>
+      <mat-slide-toggle formControlName="privateCtrl" color="primary">
+        Private
+      </mat-slide-toggle>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button type="submit">Submit</button>
+      </div>
+    </form>
+  </mat-step>
+</mat-horizontal-stepper>

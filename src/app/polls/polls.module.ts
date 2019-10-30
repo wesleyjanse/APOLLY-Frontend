@@ -6,9 +6,12 @@ import { MaterialModule} from '../core/material.module'
 import { FormSharedModule } from '../core/form.module'
 import { ReactiveFormsModule } from '@angular/forms';
 import { PollVoteComponent } from './poll-vote/poll-vote.component';
+import { MyPollsComponent } from './my-polls/my-polls.component';
+import { PollListComponent } from './poll-list/poll-list.component';
+import { PollCreateComponent } from './poll-create/poll-create.component';
 
 @NgModule({
-  declarations: [PollsComponent, PollVoteComponent],
+  declarations: [PollsComponent, PollVoteComponent, MyPollsComponent, PollListComponent, PollCreateComponent],
   imports: [
     CommonModule,
     MaterialModule,
@@ -19,7 +22,9 @@ import { PollVoteComponent } from './poll-vote/poll-vote.component';
     PollService
   ],
   exports: [
-    PollVoteComponent
+    PollVoteComponent,
+    PollListComponent,
+    PollCreateComponent
   ]
 })
 export class PollsModule { }
