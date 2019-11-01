@@ -12,7 +12,7 @@
             <app-poll-create style="width: 100%;"></app-poll-create>
         </mat-toolbar-row>
       </mat-toolbar>
-      <mat-accordion>
+      <mat-accordion class="headers-align">
         <ng-container *ngFor="let p of (polls | async)">
           <app-poll-list [name]="p.poll.name" [createdOn]="p.poll.createdOn" [answers]="p.poll.answers"
             [pollID]="p.pollID" [private]="p.poll.private? 'Private': 'Public'"></app-poll-list>

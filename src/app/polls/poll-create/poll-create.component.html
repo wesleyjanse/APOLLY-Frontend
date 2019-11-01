@@ -6,7 +6,7 @@
         <input matInput placeholder="Title" formControlName="titleCtrl">
       </mat-form-field>
       <div>
-        <button mat-button matStepperNext>Next</button>
+        <button mat-stroked-button matStepperNext>Next</button>
       </div>
     </form>
   </mat-step>
@@ -17,9 +17,10 @@
         <input matInput placeholder="E.g. Yes, No, Maybe" formControlName="answerCtrl" required>
       </mat-form-field>
       <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
+        <button mat-stroked-button matStepperPrevious>Back</button>
+        <button mat-stroked-button matStepperNext class="ml-2">Next</button>
       </div>
+      <p style="font-size: 12px; font-weight: 100; color: #595959;">Note: In order to keep the polls fair, you won't be able to change the answers afterwards.</p>
     </form>
   </mat-step>
   <mat-step [stepControl]="submitFormGroup">
@@ -30,8 +31,8 @@
         Private
       </mat-slide-toggle>
       <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button type="submit">Submit</button>
+        <button mat-stroked-button matStepperPrevious>Back</button>
+        <button mat-stroked-button class="ml-2" type="submit">Submit</button>
       </div>
     </form>
   </mat-step>

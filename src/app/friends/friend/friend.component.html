@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <mat-card class="jumbotron">
+        <h1 style="font-size: 28px;">Friends</h1>
+        <h3>Here you can find a list of al your friends!</h3>
+      </mat-card>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <form class="form">
+        <mat-form-field class="full-width">
+          <input type="text" placeholder="Search by name" aria-label="Number" (click)="clickedInput()" matInput
+            [formControl]="myControl">
+        </mat-form-field>
+      </form>
+      <mat-list>
+        <mat-list-item *ngFor="let f of (filteredOptions | async)">
+          <mat-icon matListIcon>perm_identity</mat-icon>
+          <h3 matLine> {{ f.friend.username }} </h3>
+          <p matLine> {{ f.friend.email }}</p>
+          <button mat-stroked-button>
+            <mat-icon>delete</mat-icon>
+          </button>
+          <mat-divider></mat-divider>
+        </mat-list-item>
+      </mat-list>
+    </div>
+  </div>
+</div>

@@ -7,16 +7,19 @@ import { FormSharedModule } from '../core/form.module'
 import { ReactiveFormsModule } from '@angular/forms';
 import { PollVoteComponent } from './poll-vote/poll-vote.component';
 import { MyPollsComponent } from './my-polls/my-polls.component';
-import { PollListComponent } from './poll-list/poll-list.component';
+import { PollListComponent, DialogWarning } from './poll-list/poll-list.component';
 import { PollCreateComponent } from './poll-create/poll-create.component';
 
 @NgModule({
-  declarations: [PollsComponent, PollVoteComponent, MyPollsComponent, PollListComponent, PollCreateComponent],
+  declarations: [PollsComponent, PollVoteComponent, MyPollsComponent, PollListComponent, PollCreateComponent, DialogWarning],
   imports: [
     CommonModule,
     MaterialModule,
     FormSharedModule,
     ReactiveFormsModule
+  ],
+  entryComponents: [
+    DialogWarning
   ],
   providers: [
     PollService
@@ -24,7 +27,8 @@ import { PollCreateComponent } from './poll-create/poll-create.component';
   exports: [
     PollVoteComponent,
     PollListComponent,
-    PollCreateComponent
+    PollCreateComponent,
+    DialogWarning
   ]
 })
 export class PollsModule { }

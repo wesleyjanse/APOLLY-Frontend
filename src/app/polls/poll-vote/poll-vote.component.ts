@@ -8,6 +8,7 @@ import { AuthenticateService } from 'src/app/login/services/authenticate.service
 import { Member } from 'src/app/models/member.model';
 import { Poll } from 'src/app/models/poll.model';
 import { PollService } from '../poll.service';
+import { Standing } from 'src/app/models/standings.model';
 
 @Component({
   selector: 'app-poll-vote',
@@ -43,8 +44,7 @@ export class PollVoteComponent implements OnInit {
   poll: Poll;
   alreadyVoted: boolean = false;
   pollTitleFontSize: boolean = false;
-  pollOptions: string[] = [];
-  pollVotes: string[] = [];
+  pollOptions: Array<Standing> = [];
 
   onSubmit() {
     this.pollID = this.answers[0][0].pollID;
@@ -66,11 +66,12 @@ export class PollVoteComponent implements OnInit {
       this.poll = result;
       var total: number = 0;
       for (let i = 0; i < Object.keys(result.answers).length; i++) {
-          this.pollOptions.push(result.answers[i].possibleAnswer);
-          total += result.answers[i].votes.length
-      } 
-      for (let j = 0; j < this.pollOptions.length; j++) {
-          this.pollVotes.push(String(Math.floor((result.answers[j].votes.length / total) * 100)))
+        total += result.answers[i].votes.length
+      }
+
+      for (let i = 0; i < Object.keys(result.answers).length; i++) {
+        let poll = new Standing(result.answers[i].possibleAnswer, String(Math.floor((result.answers[i].votes.length / total) * 100)))
+        this.pollOptions.push(poll);
       }
     });
   }

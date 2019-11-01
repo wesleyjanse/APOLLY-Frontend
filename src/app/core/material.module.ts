@@ -3,7 +3,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule, MatIconModule, MatSidenavModule, 
          MatListModule, MatButtonModule, MatCardModule, MatGridListModule, 
          MatBadgeModule, MatProgressSpinnerModule, MatExpansionModule,
-         MatSlideToggleModule, MatTooltipModule, MatStepperModule } from  '@angular/material';
+         MatSlideToggleModule, MatTooltipModule, MatStepperModule, MatDialogModule,
+         MatAutocompleteModule } from  '@angular/material';
 
 
 @NgModule({
@@ -21,7 +22,9 @@ import { MatToolbarModule, MatIconModule, MatSidenavModule,
     MatExpansionModule,
     MatSlideToggleModule,
     MatTooltipModule,
-    MatStepperModule
+    MatStepperModule,
+    MatDialogModule,
+    MatAutocompleteModule
   ],
   exports: [
     BrowserAnimationsModule,
@@ -37,7 +40,9 @@ import { MatToolbarModule, MatIconModule, MatSidenavModule,
     MatExpansionModule,
     MatSlideToggleModule,
     MatTooltipModule,
-    MatStepperModule
+    MatStepperModule,
+    MatDialogModule,
+    MatAutocompleteModule
   ]
 })
 export class MaterialModule { }

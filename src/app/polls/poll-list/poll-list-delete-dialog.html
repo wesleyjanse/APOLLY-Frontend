@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Warning</h1>
+<div style="font-family: 'Roboto', sans-serif; margin-bottom: 5px;" mat-dialog-content>
+  <p>Are you sure you that you want to delete this poll?</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-stroked-button (click)="onNoClick()" cdkFocusInitial>No Thanks</button>
+  <button mat-stroked-button (click)="dialogRef.close(true)">Yes</button>
+</div>

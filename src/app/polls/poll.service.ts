@@ -36,4 +36,8 @@ export class PollService {
   addPollMember(pollMember: PollMember){
     return this._httpClient.post<PollMember>("https://localhost:44371/api/pollmembers", pollMember)
   }
+
+  deletePoll(pollID: number){
+    return this._httpClient.delete<PollMember>("https://localhost:44371/api/poll/" + pollID)
+  }
 }

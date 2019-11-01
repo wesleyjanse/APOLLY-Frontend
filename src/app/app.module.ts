@@ -11,13 +11,16 @@ import { PollsComponent } from './polls/polls/polls.component';
 import { PollsModule } from './polls/polls.module';
 import { RegisterComponent } from './login/register/register.component';
 import { MyPollsComponent } from './polls/my-polls/my-polls.component';
- 
+import { FriendComponent } from './friends/friend/friend.component';
+import { FriendsModule} from './friends/friends.module';
+
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'polls', component: PollsComponent },
   { path: 'mypolls', component: MyPollsComponent },
+  { path: 'friends', component: FriendComponent },
   ];
 @NgModule({
   declarations: [
@@ -30,6 +33,7 @@ const appRoutes: Routes = [
     MaterialModule,
     LoginModule,
     PollsModule,
+    FriendsModule,
     RouterModule.forRoot(appRoutes, { enableTracing: true })
   ],
   exports: [

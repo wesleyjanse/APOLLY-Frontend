@@ -55,7 +55,11 @@ export class PollCreateComponent implements OnInit {
           this._answerService.addAnswer(newAnswer).subscribe();
         });
         let newPollMember = new PollMember(0, result.pollID, this.member.memberID)
-        this._pollService.addPollMember(newPollMember).subscribe();
+        this._pollService.addPollMember(newPollMember).subscribe(
+          () => {
+            this._myPolls.ngOnInit();
+          }
+        );
       }
     );
 
