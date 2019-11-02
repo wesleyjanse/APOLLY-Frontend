@@ -15,4 +15,12 @@ export class FriendService {
     return this._httpClient.get<Friend[]>("https://localhost:44371/api/friends/getAllByMemberID/" + memberID)
   }
 
+  getFriendRequestsByMemberID(memberID: number): Observable<Friend[]>{
+    return this._httpClient.get<Friend[]>("https://localhost:44371/api/friends/getAllRequestsByMemberID/" + memberID)
+  }
+
+  addFriend(friend: Friend): Observable<Friend>{
+    return this._httpClient.post<Friend>("https://localhost:44371/api/friends", friend)
+  }
+
 }

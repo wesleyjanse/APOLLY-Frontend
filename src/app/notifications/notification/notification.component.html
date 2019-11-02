@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <mat-card class="jumbotron">
+        <h1 style="font-size: 28px;">Notifications</h1>
+        <h3>All your friend requests and poll invitations in one place!</h3>
+      </mat-card>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <mat-list>
+        <h3 mat-subheader>Friendrequests</h3>
+        <mat-list-item *ngFor="let f of (requests | async)">
+          <mat-icon mat-list-icon>person_add</mat-icon>
+          <h4 mat-line>{{f.member.username}}</h4>
+          <p mat-line> {{f.member.email}} </p>
+          <button (click)="onClickAdd(f.friendsID, f.memberID)" matTooltip="Add friend" matTooltipPosition="above"
+            mat-stroked-button>
+            <mat-icon>add</mat-icon>
+          </button> &nbsp;
+          <button (click)="onClickCancel(f.friendsID)" matTooltip="Delete friend" matTooltipPosition="above" mat-stroked-button>
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-list-item>
+        <mat-list-item *ngIf="!(requests | async)?.length">
+          <h4 mat-line>You do not have any pending friendrequests.</h4>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <h3 mat-subheader>Poll invitations</h3>
+        <mat-list-item *ngFor="let note of notes">
+          <mat-icon mat-list-icon>post_add</mat-icon>
+          <h4 mat-line>{{note.name}}</h4>
+          <p mat-line> {{note.updated | date}} </p>
+        </mat-list-item>
+      </mat-list>
+    </div>
+  </div>
+</div>

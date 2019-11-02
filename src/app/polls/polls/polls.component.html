@@ -1,7 +1,3 @@
-<!-- <ul>
-  <li style="margin-top: 5px" *ngFor="let p of (polls | async)">{{p.poll.name}} --- {{ p.member.username }}</li>
-</ul> -->
-
 <div class="container">
   <div class="row">
     <div class="col-md-12">
@@ -12,9 +8,9 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-sm-12 col-md-6 col-xl-4" style="margin-bottom: 20px;" *ngFor="let p of (polls | async)">
-      <div *ngIf="!p.poll.private">
-        <app-poll-vote [name]="p.poll.name" [username]="p.member.username" [answers]=[p.poll.answers]></app-poll-vote>
+    <div class="col-sm-12 col-md-6 col-xl-4 d-flex" style="margin-bottom: 20px;" *ngFor="let p of (polls | async)">
+      <div *ngIf="!p.poll.private" style="width: 100%;">
+        <app-poll-vote style="width: 100%;" [name]="p.poll.name" [username]="p.member.username" [answers]=[p.poll.answers]></app-poll-vote>
       </div>
     </div>
   </div>

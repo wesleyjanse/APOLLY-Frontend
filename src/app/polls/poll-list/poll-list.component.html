@@ -58,8 +58,7 @@
       <div class="row d-flex justify-content-center" style="padding: 5px 0px;">
         <div *ngFor="let poll of pollOptions" class="col-md-3 col-xs-6">
           <h3 style="font-weight: 100; text-align: center;">{{ poll.possibleAnswer }}</h3>
-          <div
-            style="position: relative; width: 100px; height: 100px; display: flex; align-items: center; justify-content: center;">
+          <div style="margin:auto; position: relative; width: 100px; height: 100px; display: flex; align-items: center; justify-content: center;">
             <mat-progress-spinner style="margin: auto; width: 100px;height: 100px;position: absolute;top: 0;left: 0;"
               [color]="'primary'" [mode]="'determinate'" [value]="poll.count">
             </mat-progress-spinner>

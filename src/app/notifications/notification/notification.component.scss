@@ -1,0 +1,26 @@
+.jumbotron {
+    box-shadow: none;
+    background: radial-gradient(circle, rgba(188,230,255,1) 0%, rgba(173,220,249,1) 24%, rgba(78,161,211,1) 100%);
+    color: #575757;
+    height: 300px;
+    margin: 15px 0px;
+  
+    h1 {
+      font-size: 34px;
+      margin-bottom: 10px;
+    }
+  
+    h3 {
+      font-size: 19px;
+    }
+  
+    h1,
+    h3 {
+      text-align: center;
+      font-weight: 100;
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+  

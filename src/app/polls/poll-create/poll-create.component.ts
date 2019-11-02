@@ -9,6 +9,8 @@ import { Answer } from 'src/app/models/answer.model';
 import { PollMember } from 'src/app/models/pollmember.model';
 import { AuthenticateService } from 'src/app/login/services/authenticate.service';
 import { Member } from 'src/app/models/member.model';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import {MatChipInputEvent} from '@angular/material/chips';
 
 @Component({
   selector: 'app-poll-create',
@@ -20,6 +22,7 @@ export class PollCreateComponent implements OnInit {
   titleFormGroup: FormGroup;
   answerFormGroup: FormGroup;
   submitFormGroup: FormGroup;
+  answers: string[] = [];
   member: Member;
   constructor(private _formBuilder: FormBuilder, private _myPolls: MyPollsComponent, private _pollService: PollService, private _answerService: AnswerService, private _authenticateService: AuthenticateService) {
     this._authenticateService.isLoggedin.subscribe(e=> {
@@ -41,16 +44,42 @@ export class PollCreateComponent implements OnInit {
     });
   }
 
+
+
+  visible = true;
+  selectable = true;
+  removable = true;
+  addOnBlur = true;
+  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+  add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+
+    if ((value || '').trim()) {
+      this.answers.push(value.trim());
+    }
+
+    if (input) {
+      input.value = '';
+    }
+  }
+
+  remove(answer: string): void {
+    const index = this.answers.indexOf(answer);
+
+    if (index >= 0) {
+      this.answers.splice(index, 1);
+    }
+  }
+
+
   onSubmit() {
-    var splitted = this.answerFormGroup.get("answerCtrl").value.split(","); 
-    var splittedFiltered = splitted.filter((item) => item != ' ')
-   
     var today = new Date();
     let pollToAdd = new Poll(0, this.titleFormGroup.get("titleCtrl").value, this.submitFormGroup.get("privateCtrl").value, today);
     
     this._pollService.addPoll(pollToAdd).subscribe(
       (result)=>{
-        splittedFiltered.forEach(string => {
+        this.answers.forEach(string => {
           let newAnswer = new Answer(0, string, result.pollID)
           this._answerService.addAnswer(newAnswer).subscribe();
         });

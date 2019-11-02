@@ -6,17 +6,17 @@
           <p><span>{{ member.username }}</span><br>
             {{ member.email }}</p>
         </div>
-        <a routerLink="polls">
+        <a routerLink="Polls">
           <button mat-list-item> Home &nbsp; <mat-icon>home</mat-icon></button>
         </a>
-        <a routerLink="mypolls">
+        <a routerLink="My-polls">
           <button mat-list-item> My polls &nbsp; <mat-icon>bar_chart</mat-icon></button>
         </a>
-        <a routerLink="friends">
+        <a routerLink="Friends">
           <button mat-list-item> Friends &nbsp; <mat-icon>group</mat-icon></button>
         </a>
-        <a routerLink="">
-          <button mat-list-item> Notifications &nbsp; <mat-icon matBadge="1" matBadgeColor="warn">notifications</mat-icon></button>
+        <a routerLink="Notifications">
+          <button mat-list-item> Notifications &nbsp; <mat-icon *ngIf="notificationCount == 0">notifications</mat-icon> <mat-icon *ngIf="notificationCount != 0" [matBadge]="notificationCount" matBadgeColor="warn">notifications</mat-icon></button>
         </a>
         <a routerLink="">
           <button mat-list-item> Account &nbsp; <mat-icon>settings_applications</mat-icon></button>
@@ -32,12 +32,12 @@
       </button>
       <a routerLink=""><img class="logo" src="../assets/logo.png" width="180px" alt="logo"></a>
       <div class="nav-list">
-        <a *ngIf="!this.userLoggedIn" routerLink="login">
+        <a *ngIf="!this.userLoggedIn" routerLink="Login">
           <button mat-flat-button style="margin-right: 15px;" color="primary">
             <a>Login</a>
           </button>
         </a>
-        <a *ngIf="!this.userLoggedIn" routerLink="register">
+        <a *ngIf="!this.userLoggedIn" routerLink="Register">
           <button mat-flat-button style="margin-right: 15px;" color="primary">
             <a>Register</a>
           </button>

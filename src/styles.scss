@@ -12,6 +12,7 @@ a {
     text-decoration: none; /* no underline */
   }
 
+
 $mat-myapp-primary: (
     50 : #eaf4fa,
     100 : #cae3f2,
@@ -81,5 +82,15 @@ $mat-myapp-accent: (
 $primary: mat-palette($mat-myapp-primary);
 $accent: mat-palette($mat-myapp-accent);
 $theme: mat-light-theme($primary, $accent);
+
+.mat-step-icon{
+    background-color: #61533f !important;
+}
+
+.mat-step-icon-selected, .mat-step-header .mat-step-icon-state-done, .mat-step-icon-state-edit {
+    background-color: #ffd9a3 !important;
+    color: white !important;
+}
+
 
 @include angular-material-theme($theme);

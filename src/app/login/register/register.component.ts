@@ -10,7 +10,6 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const invalidCtrl = !!(control && control.invalid && control.parent.dirty);
     const invalidParent = !!(control && control.parent && control.parent.invalid && control.parent.dirty && control.touched);
-
     return (invalidCtrl || invalidParent);
   }
 }
@@ -55,10 +54,12 @@ export class RegisterComponent implements OnInit {
     this.submitted = true;
     let memberToAdd = new Member(0, this.registerForm.get('username').value, this.registerForm.get('password').value, this.registerForm.get('email').value, '');
     this.subscription = this._registerService.addMember(memberToAdd).subscribe(() => {
-      this._router.navigate(['login']);
+      this._router.navigate(['Login']);
     });
   }
 
+
+  
   model: Member = new Member(0, '', '', '', '');
   matcher = new MyErrorStateMatcher();
 }

@@ -13,14 +13,17 @@ import { RegisterComponent } from './login/register/register.component';
 import { MyPollsComponent } from './polls/my-polls/my-polls.component';
 import { FriendComponent } from './friends/friend/friend.component';
 import { FriendsModule} from './friends/friends.module';
+import { NotificationsModule} from './notifications/notifications.module';
+import { NotificationComponent } from './notifications/notification/notification.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'polls', component: PollsComponent },
-  { path: 'mypolls', component: MyPollsComponent },
-  { path: 'friends', component: FriendComponent },
+  { path: 'Login', component: LoginComponent },
+  { path: 'Register', component: RegisterComponent },
+  { path: 'Polls', component: PollsComponent },
+  { path: 'My-polls', component: MyPollsComponent },
+  { path: 'Friends', component: FriendComponent },
+  { path: 'Notifications', component: NotificationComponent },
   ];
 @NgModule({
   declarations: [
@@ -34,6 +37,7 @@ const appRoutes: Routes = [
     LoginModule,
     PollsModule,
     FriendsModule,
+    NotificationsModule,
     RouterModule.forRoot(appRoutes, { enableTracing: true })
   ],
   exports: [

@@ -9,22 +9,60 @@
   </div>
   <div class="row">
     <div class="col-md-12">
-      <form class="form">
-        <mat-form-field class="full-width">
-          <input type="text" placeholder="Search by name" aria-label="Number" (click)="clickedInput()" matInput
-            [formControl]="myControl">
-        </mat-form-field>
-      </form>
+      <div class="row">
+        <form class="col-md-6 col-sm-12 col-xs-12">
+          <mat-form-field style="width: 100%;">
+            <input type="text" placeholder="Search friends" aria-label="Number" matInput [formControl]="myControl">
+          </mat-form-field>
+        </form>
+        <form [formGroup]="addForm" class="col-md-6 col-sm-12 col-xs-12" (submit)="addUser()">
+          <mat-form-field style="width: 100%;">
+            <input type="text" placeholder="Search all users" aria-label="Number" matInput formControlName="addControl"
+              [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let o of (filteredMemberOptions | async)" [value]="o.username">
+                <mat-icon>person</mat-icon>
+                <span>{{o.username}}</span> |
+                <small>{{o.email}}</small>
+              </mat-option>
+            </mat-autocomplete>
+            <button [disabled]="!addForm.valid" matSuffix mat-button type="submit">
+              <mat-icon>person_add</mat-icon>
+            </button>
+          </mat-form-field>
+        </form>
+      </div>
       <mat-list>
-        <mat-list-item *ngFor="let f of (filteredOptions | async)">
-          <mat-icon matListIcon>perm_identity</mat-icon>
-          <h3 matLine> {{ f.friend.username }} </h3>
-          <p matLine> {{ f.friend.email }}</p>
-          <button mat-stroked-button>
-            <mat-icon>delete</mat-icon>
-          </button>
-          <mat-divider></mat-divider>
-        </mat-list-item>
+        <ng-container *ngFor="let f of (filteredOptions | async)">
+          <mat-list-item *ngIf="f.accepted && f.friend.username != member.username">
+            <mat-icon matListIcon>perm_identity</mat-icon>
+            <h3 matLine> {{ f.friend.username }} </h3>
+            <p matLine> {{ f.friend.email }}</p>
+            <button (click)="onClickCancel(f.friendsID)"  matTooltip="Delete friend" matTooltipPosition="above" mat-stroked-button>
+              <mat-icon>delete</mat-icon>
+            </button>
+            <mat-divider></mat-divider>
+          </mat-list-item>
+          <mat-list-item *ngIf="f.accepted && f.friend.username == member.username">
+            <mat-icon matListIcon>perm_identity</mat-icon>
+            <h3 matLine> {{ f.member.username }} </h3>
+            <p matLine> {{ f.member.email }}</p>
+            <button (click)="onClickCancel(f.friendsID)"  matTooltip="Delete friend" matTooltipPosition="above" mat-stroked-button>
+              <mat-icon>delete</mat-icon>
+            </button>
+            <mat-divider></mat-divider>
+          </mat-list-item>
+          <mat-list-item *ngIf="!f.accepted">
+            <mat-icon matListIcon>perm_identity</mat-icon>
+            <h3 matLine> {{ f.friend.username }} </h3>
+            <p matLine> {{ f.friend.email }}</p>
+            <p>Pending</p> &nbsp;
+            <button (click)="onClickCancel(f.friendsID)"  matTooltip="Cancel friendrequest" matTooltipPosition="above" mat-stroked-button>
+              <mat-icon>cancel</mat-icon>
+            </button>
+            <mat-divider></mat-divider>
+          </mat-list-item>
+        </ng-container>
       </mat-list>
     </div>
   </div>
