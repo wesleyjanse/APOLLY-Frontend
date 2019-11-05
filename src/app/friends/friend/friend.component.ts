@@ -11,18 +11,12 @@ import { NotificationService } from 'src/app/notifications/notification.service'
 import { MatSnackBar } from '@angular/material';
 
 
-
-
-
 @Component({
   selector: 'snack-bar-component',
   templateUrl: './snack-bar-component.html',
   styleUrls: ['./friend.component.scss']
 })
-export class SnackBarComponent {}
-
-
-
+export class SnackBarComponent { }
 
 @Component({
   selector: 'app-friend',
@@ -31,7 +25,6 @@ export class SnackBarComponent {}
 })
 export class FriendComponent implements OnInit {
   member: Member;
-  //friends: Observable<Friend[]>;
   options: Friend[] = [];
   optionsMember: Member[] = [];
 
@@ -81,24 +74,24 @@ export class FriendComponent implements OnInit {
       );
   }
 
+  alreadyRequested: boolean;
   addUser() {
     this._memberService.getWhereName(this.addForm.get("addControl").value).subscribe((res) => {
-      //console.log(res);
       let durationInSeconds = 5;
       let newFriend = new Friend(0, this.member.memberID, res.memberID, false);
-      let alreadyRequested: boolean;
+      this.alreadyRequested = false
+      
+
       this.options.forEach(o => {
-        if (o.friend.username == res.username || o.member.username == res.username) {
-          alreadyRequested = true
-        } else{
-          alreadyRequested = false;
+        if (o.friend.username === res.username || o.member.username === res.username) {
+          this.alreadyRequested = true;
         }
       })
-      if (!alreadyRequested) {
+      if (!this.alreadyRequested) {
         this._friendService.addFriend(newFriend).subscribe(() => {
           this.ngOnInit();
         })
-      } else{
+      } else {
         this._snackBar.openFromComponent(SnackBarComponent, {
           duration: durationInSeconds * 1000,
         });

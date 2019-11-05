@@ -3,6 +3,7 @@ import { AuthenticateService } from './login/services/authenticate.service';
 import { Router } from '@angular/router';
 import { NotificationService } from './notifications/notification.service';
 import { Member } from './models/member.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -14,8 +15,8 @@ export class AppComponent {
   member: Member;
 
   userLoggedIn: boolean = false;
-  notificationCount: number = 0;
-
+  notificationCount: number;
+  
   constructor(private _authenticateService: AuthenticateService, private _router: Router, private _notificationService: NotificationService) {
     this._authenticateService.isLoggedin.subscribe(e => {
       if (localStorage.getItem('member') != null) {

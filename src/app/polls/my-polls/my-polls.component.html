@@ -1,23 +1,33 @@
 <div class="container">
+
   <div class="row">
     <div class="col-md-12">
-      <mat-toolbar>
-        <mat-toolbar-row>
-          <span>My polls</span>
+      <mat-card class="jumbotron">
+        <div class="row d-flex" style="margin: 15px;">
+          <h2 style="font-weight: 100;">My polls</h2>
           <span class="spacer"></span>
-          <button (click)="onClickCreate()" mat-stroked-button>Create new<mat-icon class="icon" aria-hidden="false">library_add</mat-icon>
+          <button (click)="onClickCreate()" mat-stroked-button>Create new<mat-icon class="icon" aria-hidden="false">
+              library_add</mat-icon>
           </button>
-        </mat-toolbar-row>
-        <mat-toolbar-row *ngIf="create" class="col-md-12">
-            <app-poll-create style="width: 100%;"></app-poll-create>
-        </mat-toolbar-row>
-      </mat-toolbar>
-      <mat-accordion class="headers-align">
-        <ng-container *ngFor="let p of (polls | async)">
-          <app-poll-list [name]="p.poll.name" [createdOn]="p.poll.createdOn" [answers]="p.poll.answers"
-            [pollID]="p.pollID" [private]="p.poll.private? 'Private': 'Public'"></app-poll-list>
-        </ng-container>
-      </mat-accordion>
+        </div>
+        <div class="row" *ngIf="create">
+          <app-poll-create style="width: 100%;"></app-poll-create>
+        </div>
+      </mat-card>
     </div>
   </div>
+  <mat-accordion class="headers-align">
+    <h3 style="font-weight: 100;" mat-subheader>Your polls</h3>
+    <ng-container *ngFor="let p of (polls | async)" style="margin: 15px;">
+      <app-poll-list *ngIf="p.accepted && p.creator" [name]="p.poll.name" [createdOn]="p.poll.createdOn"
+        [answers]="p.poll.answers" [pollID]="p.pollID" [private]="p.poll.private? 'Private': 'Public'">
+      </app-poll-list>
+    </ng-container>
+    <h3 style="font-weight: 100;" mat-subheader>Polls of friends</h3>
+    <ng-container *ngFor="let p of (polls | async)" style="margin: 15px;">
+      <app-poll-list *ngIf="p.accepted && !p.creator" [name]="p.poll.name" [createdOn]="p.poll.createdOn"
+        [answers]="p.poll.answers" [pollID]="p.pollID" [private]="p.poll.private? 'Private': 'Public'">
+      </app-poll-list>
+    </ng-container>
+  </mat-accordion>
 </div>

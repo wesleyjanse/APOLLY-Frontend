@@ -19,7 +19,7 @@
           <mat-form-field style="width: 100%;">
             <input type="text" placeholder="Search all users" aria-label="Number" matInput formControlName="addControl"
               [matAutocomplete]="auto">
-            <mat-autocomplete #auto="matAutocomplete">
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
               <mat-option *ngFor="let o of (filteredMemberOptions | async)" [value]="o.username">
                 <mat-icon>person</mat-icon>
                 <span>{{o.username}}</span> |

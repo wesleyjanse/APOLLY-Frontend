@@ -6,13 +6,27 @@
   flex: 1 1 auto;
 }
 
-mat-toolbar {
-    border-radius: 8px;
-    margin: 10px 0px;
-    color: white;
-    background: linear-gradient(0deg, rgba(100,116,229,1) 0%, rgba(154,164,236,1) 100%);
-    mat-toolbar-row{
-        font-weight: 100;
-    }
-}
+.jumbotron {
+  box-shadow: none;
+  background: radial-gradient(circle, rgba(154, 164, 236, 1) 0%, rgba(151, 161, 236, 1) 36%, rgba(100, 116, 229, 1) 100%);
+  color: white;
+  margin: 15px 0px;
 
+  h1 {
+    font-size: 34px;
+    margin-bottom: 10px;
+  }
+
+  h3 {
+    font-size: 19px;
+  }
+
+  h1,
+  h3 {
+    text-align: center;
+    font-weight: 100;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}

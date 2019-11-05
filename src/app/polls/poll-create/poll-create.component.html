@@ -1,4 +1,4 @@
-<mat-horizontal-stepper linear="true" #stepper>
+<mat-horizontal-stepper *ngIf="!smallScreen" linear="true" #stepper class="stepper">
   <mat-step [stepControl]="titleFormGroup">
     <form [formGroup]="titleFormGroup">
       <ng-template matStepLabel> <span style="color: white;">What is the title of your poll?</span> </ng-template>
@@ -12,7 +12,121 @@
   </mat-step>
   <mat-step [stepControl]="answerFormGroup">
     <form [formGroup]="answerFormGroup">
-      <ng-template matStepLabel><span style="color: white;">Fill in possible answers (Seperated by comma's)</span></ng-template>
+      <ng-template matStepLabel><span style="color: white;">Fill in possible answers</span></ng-template>
+      <mat-form-field style="width: 100%;">
+        <mat-chip-list ngDefaultControl formControlName="answerCtrl" #chipList
+          aria-label="Type possible answers (Seperated by comma's)">
+          <mat-chip *ngFor="let a of answers" [selectable]="selectable" [removable]="removable" (removed)="remove(a)">
+            {{a}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input placeholder="New answer..." [matChipInputFor]="chipList"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+            (matChipInputTokenEnd)="add($event)">
+        </mat-chip-list>
+      </mat-form-field>
+      <div>
+        <button mat-stroked-button matStepperPrevious>Back</button>
+        <button mat-stroked-button matStepperNext class="ml-2">Next</button>
+      </div>
+      <p style="font-size: 12px; font-weight: 100; color: #d6d6d6;">Note: Seperate answers by comma or enter. <br>
+        Note: In order to keep the polls fair, you won't be able to change the answers afterwards.</p>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="privateFormGroup">
+    <form [formGroup]="privateFormGroup" (ngSubmit)="!private? onSubmit() : stepper.next()">
+      <ng-template matStepLabel><span style="color: white;">Privacy</span></ng-template>
+      <p>Do you want your poll to be private or public?</p>
+      <mat-slide-toggle (dragChange)="onDragChange($event)" (toggleChange)="onToggleChange($event)"
+        formControlName="privateCtrl" color="primary">
+        Private
+      </mat-slide-toggle>
+      <div *ngIf="!private">
+        <button mat-stroked-button matStepperPrevious>Back</button>
+        <button mat-stroked-button class="ml-2" type="submit">Submit</button>
+      </div>
+      <div *ngIf="private">
+        <button mat-stroked-button matStepperPrevious>Back</button>
+        <button mat-stroked-button matStepperNext class="ml-2">Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step *ngIf="private" [stepControl]="membersFormGroup">
+    <div class="row">
+      <div class="col-md-6">
+        <form [formGroup]="membersFormGroup" (ngSubmit)="onSubmit()">
+          <ng-template matStepLabel><span style="color: white;">Invite friends</span></ng-template>
+          <p>Invite friends to your poll</p>
+          <mat-form-field *ngIf="!newFriend"  style="width: 100%;">
+            <input type="text" placeholder="Select friend" aria-label="Number" matInput [formControl]="myControl"
+              [matAutocomplete]="auto">
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+              <ng-container *ngFor="let option of (filteredOptions | async)">
+                <mat-option (onSelectionChange)="onEnter(option)" *ngIf="option.friend.username == member.username"
+                  [value]="option.member.username">
+                  {{option.member.username}}
+                </mat-option>
+              </ng-container>
+              <ng-container *ngFor="let option of (filteredOptions | async)">
+                <mat-option (onSelectionChange)="onEnter(option)" *ngIf="option.friend.username != member.username"
+                  [value]="option.friend.username">
+                  {{option.friend.username}}
+                </mat-option>
+              </ng-container>
+            </mat-autocomplete>
+          </mat-form-field>
+          <mat-form-field *ngIf="newFriend" style="width: 100%;">
+            <input type="email" placeholder="Add user by email" aria-label="Number" matInput
+              formControlName="emailCtrl">
+            <button type="button" (click)="sendEmail()" [disabled]="!membersFormGroup.valid" matSuffix mat-button>
+              <mat-icon>send</mat-icon>
+            </button>
+          </mat-form-field>
+          <p style="font-size: 13px; font-weight: 200; color: #d6d6d6; margin-bottom: 5px;">Does your friend not have an account? <span style="cursor: pointer; color: #ffd9a3;"
+              (click)="clickEmail()">Click here</span>
+          </p>
+          <button mat-stroked-button matStepperPrevious>Back</button>
+          <button mat-stroked-button class="ml-2" type="submit">Submit</button>
+        </form>
+      </div>
+      <div class="col-md-6">
+        <p>Invited friends</p>
+        <mat-selection-list #selectedItems>
+          <mat-list-option style="color: white;" *ngFor="let f of selectedFriends" [value]="f">
+            <ng-container *ngIf="f.friend.username == member.username">
+              <p>
+                {{ f.member.username }} | <span style="font-size: 12px;">{{ f.member.email }}</span>
+              </p>
+            </ng-container>
+            <ng-container *ngIf="f.friend.username != member.username">
+              <p>
+                {{ f.friend.username }} | <span style="font-size: 12px;">{{ f.friend.email }}</span>
+              </p>
+            </ng-container>
+          </mat-list-option>
+          <button (click)="clearItems(selectedItems.selectedOptions.selected)"
+            *ngIf="selectedItems.selectedOptions.selected.length != 0" mat-stroked-button>Remove selected</button>
+        </mat-selection-list>
+      </div>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>
+
+<mat-vertical-stepper *ngIf="smallScreen" linear="true" #stepper class="stepper">
+  <mat-step [stepControl]="titleFormGroup">
+    <form [formGroup]="titleFormGroup">
+      <ng-template matStepLabel> <span style="color: white;">What is the title of your poll?</span> </ng-template>
+      <mat-form-field style="width: 50%;">
+        <input matInput placeholder="Title" formControlName="titleCtrl">
+      </mat-form-field>
+      <div>
+        <button mat-stroked-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="answerFormGroup">
+    <form [formGroup]="answerFormGroup">
+      <ng-template matStepLabel><span style="color: white;">Fill in possible answers</span></ng-template>
       <mat-form-field style="width: 100%;">
         <mat-chip-list #chipList aria-label="Type possible answers (Seperated by comma's)">
           <mat-chip *ngFor="let a of answers" [selectable]="selectable" [removable]="removable" (removed)="remove(a)">
@@ -28,21 +142,73 @@
         <button mat-stroked-button matStepperPrevious>Back</button>
         <button mat-stroked-button matStepperNext class="ml-2">Next</button>
       </div>
-      <p style="font-size: 12px; font-weight: 100; color: #d6d6d6;">Note: In order to keep the polls fair, you won't be
-        able to change the answers afterwards.</p>
+      <p style="font-size: 12px; font-weight: 100; color: #d6d6d6;">Note: Seperate answers by comma or enter. <br>
+        Note: In order to keep the polls fair, you won't be able to change the answers afterwards.</p>
     </form>
   </mat-step>
-  <mat-step [stepControl]="submitFormGroup">
-    <form [formGroup]="submitFormGroup" (ngSubmit)="onSubmit()">
+  <mat-step [stepControl]="privateFormGroup">
+    <form [formGroup]="privateFormGroup" (ngSubmit)="!private? onSubmit() : stepper.next()">
       <ng-template matStepLabel><span style="color: white;">Privacy</span></ng-template>
       <p>Do you want your poll to be private or public?</p>
-      <mat-slide-toggle formControlName="privateCtrl" color="primary">
+      <mat-slide-toggle (dragChange)="onDragChange($event)" (toggleChange)="onToggleChange($event)"
+        formControlName="privateCtrl" color="primary">
         Private
       </mat-slide-toggle>
-      <div>
+      <div *ngIf="!private">
         <button mat-stroked-button matStepperPrevious>Back</button>
         <button mat-stroked-button class="ml-2" type="submit">Submit</button>
       </div>
+      <div *ngIf="private">
+        <button mat-stroked-button matStepperPrevious>Back</button>
+        <button mat-stroked-button matStepperNext class="ml-2">Next</button>
+      </div>
     </form>
   </mat-step>
-</mat-horizontal-stepper>
+  <mat-step *ngIf="private" [stepControl]="membersFormGroup">
+    <div class="row">
+      <div class="col-md-6">
+        <form [formGroup]="membersFormGroup" (ngSubmit)="onSubmit()">
+          <ng-template matStepLabel><span style="color: white;">Invite friends</span></ng-template>
+          <p>Invite friends to your poll</p>
+          <mat-form-field>
+            <input type="text" placeholder="Select friend" aria-label="Number" matInput [formControl]="myControl"
+              [matAutocomplete]="auto">
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+              <ng-container *ngFor="let option of (filteredOptions | async)">
+                <mat-option (onSelectionChange)="onEnter(option)" *ngIf="option.friend.username == member.username"
+                  [value]="option.member.username">
+                  {{option.member.username}}
+                </mat-option>
+              </ng-container>
+              <ng-container *ngFor="let option of (filteredOptions | async)">
+                <mat-option (onSelectionChange)="onEnter(option)" *ngIf="option.friend.username != member.username"
+                  [value]="option.friend.username">
+                  {{option.friend.username}}
+                </mat-option>
+              </ng-container>
+            </mat-autocomplete>
+          </mat-form-field>
+          <p style="font-size: 13px; font-weight: 200; color: #d6d6d6;">Does your friend not have an account? Click here
+          </p>
+          <button mat-stroked-button matStepperPrevious>Back</button>
+          <button mat-stroked-button class="ml-2" type="submit">Submit</button>
+        </form>
+      </div>
+      <div class="col-md-6">
+        <p>Invited friends</p>
+        <mat-selection-list #selectedItems>
+          <mat-list-option style="color: white;" *ngFor="let f of selectedFriends" [value]="f">
+            <ng-container *ngIf="f.friend.username == member.username">
+              {{ f.member.username }}
+            </ng-container>
+            <ng-container *ngIf="f.friend.username != member.username">
+              {{ f.friend.username }}
+            </ng-container>
+          </mat-list-option>
+          <button (click)="clearItems(selectedItems.selectedOptions.selected)"
+            *ngIf="selectedItems.selectedOptions.selected.length != 0" mat-stroked-button>Remove selected</button>
+        </mat-selection-list>
+      </div>
+    </div>
+  </mat-step>
+</mat-vertical-stepper>

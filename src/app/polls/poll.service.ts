@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { PollMember } from '../models/pollmember.model';
 import { Poll } from '../models/poll.model';
+import { Member } from '../models/member.model';
 
 @Injectable()
 export class PollService {
@@ -17,6 +18,9 @@ export class PollService {
     return this._httpClient.get<PollMember[]>("https://localhost:44371/api/PollMembers/getAllByMemberId/" + memberID)
   }
 
+  getCreatorFromPoll(pollID: number): Observable<Member> {
+    return this._httpClient.get<Member>("https://localhost:44371/api/PollMembers/getCreatorByPollId/" + pollID);
+  }
   getPoll(pollID: number) {
     return this._httpClient.get<Poll>("https://localhost:44371/api/poll/" + pollID);
   }

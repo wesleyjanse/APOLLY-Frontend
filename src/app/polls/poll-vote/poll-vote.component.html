@@ -4,7 +4,7 @@
       <span (window:resize)="onResize($event)" [ngClass]="{'pollTitleFontSize': pollTitleFontSize}">{{ name }}</span>
     </mat-card-title>
     <mat-card-subtitle style="padding-bottom: 5px;border-bottom: 1.5px solid #A3DCFF;">
-      Created by: {{ username }} <br />
+      Created by: {{ creator }} <br />
       <p *ngIf="alreadyVoted" style="color: red;">You have already voted on this poll</p>
     </mat-card-subtitle>
     <mat-card-content>

@@ -33,6 +33,7 @@ export class PollVoteComponent implements OnInit {
   @Input() name: string;
   @Input() username: string;
   @Input() answers: Observable<Answer[]>;
+  @Input() creator: string;
 
   submitted: boolean = false;
   pollID: number;

@@ -20,10 +20,14 @@
           color="primary" mat-stroked-button>
           <mat-icon>edit</mat-icon>
         </button> &nbsp;
+        <button *ngIf="creator == loggedInUsername" matTooltip="Invite members"
+          matTooltipPosition="below" color="primary" mat-stroked-button>
+          <mat-icon>add</mat-icon>
+        </button> &nbsp;
         <button (click)="deletePoll()" *ngIf="creator == loggedInUsername" matTooltip="Delete"
           matTooltipPosition="below" color="primary" mat-stroked-button>
           <mat-icon>delete_outline</mat-icon>
-        </button>
+        </button> 
         <p style="color: red;" *ngIf="creator != loggedInUsername">
           You did not create this poll, so you cannot edit or delete it.
         </p>

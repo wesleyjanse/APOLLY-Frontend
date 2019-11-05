@@ -19,7 +19,8 @@
             mat-stroked-button>
             <mat-icon>add</mat-icon>
           </button> &nbsp;
-          <button (click)="onClickCancel(f.friendsID)" matTooltip="Delete friend" matTooltipPosition="above" mat-stroked-button>
+          <button (click)="onClickCancel(f.friendsID)" matTooltip="Delete friend" matTooltipPosition="above"
+            mat-stroked-button>
             <mat-icon>cancel</mat-icon>
           </button>
         </mat-list-item>
@@ -28,10 +29,23 @@
         </mat-list-item>
         <mat-divider></mat-divider>
         <h3 mat-subheader>Poll invitations</h3>
-        <mat-list-item *ngFor="let note of notes">
-          <mat-icon mat-list-icon>post_add</mat-icon>
-          <h4 mat-line>{{note.name}}</h4>
-          <p mat-line> {{note.updated | date}} </p>
+        <ng-container *ngFor="let p of pollRequests">
+          <mat-list-item *ngIf="!p.accepted">
+            <mat-icon mat-list-icon>post_add</mat-icon>
+            <h4 mat-line>{{p.poll.name}}</h4>
+            <p mat-line>Invited by: {{p.creatorName}} </p>
+            <button (click)="onClickAccept(p.pollMemberID, p.poll.pollID)" matTooltip="Accept" matTooltipPosition="above"
+              mat-stroked-button>
+              <mat-icon>done</mat-icon>
+            </button> &nbsp;
+            <button (click)="onClickReject(p.pollMemberID)" matTooltip="Reject" matTooltipPosition="above"
+              mat-stroked-button>
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-list-item>
+        </ng-container>
+        <mat-list-item *ngIf="!openRequests">
+          <h4 mat-line>You do not have any invitations.</h4>
         </mat-list-item>
       </mat-list>
     </div>

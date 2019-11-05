@@ -8,10 +8,29 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-sm-12 col-md-6 col-xl-4 d-flex" style="margin-bottom: 20px;" *ngFor="let p of (polls | async)">
-      <div *ngIf="!p.poll.private" style="width: 100%;">
-        <app-poll-vote style="width: 100%;" [name]="p.poll.name" [username]="p.member.username" [answers]=[p.poll.answers]></app-poll-vote>
-      </div>
+    <div class="col-md-12" style="margin-bottom: 20px;">
+      <mat-tab-group style="width: 100%;" dynamicHeight>
+        <mat-tab label="Public polls">
+          <div class="row">
+            <ng-container *ngFor="let p of (polls | async)">
+              <div *ngIf="!p.poll.private" style="margin: 10px 0px" class="col-lg-4 col-md-6 col-sm-12">
+                <app-poll-vote style="width: 100%;" [name]="p.poll.name" [username]="p.member.username"
+                  [answers]=[p.poll.answers] [creator]="p.creatorName"></app-poll-vote>
+              </div>
+            </ng-container>
+          </div>
+        </mat-tab>
+        <mat-tab label="Private polls">
+          <div class="row">
+            <ng-container *ngFor="let p of privatePolls">
+              <div *ngIf="p.poll.private && p.accepted" style="margin: 10px 0px" class="col-lg-4 col-md-6 col-sm-12">
+                <app-poll-vote style="width: 100%;" [name]="p.poll.name" [username]="p.member.username"
+                  [answers]=[p.poll.answers] [creator]="p.creatorName"></app-poll-vote>
+              </div>
+            </ng-container>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
     </div>
   </div>
 </div>
