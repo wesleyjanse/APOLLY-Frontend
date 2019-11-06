@@ -79,9 +79,43 @@ $mat-myapp-accent: (
     )
 );
 
+$mat-myapp-warn: (
+    50 : #eceefc,
+    100 : #d1d5f7,
+    200 : #b2baf2,
+    300 : #939eed,
+    400 : #7b89e9,
+    500 : #6474e5,
+    600 : #5c6ce2,
+    700 : #5261de,
+    800 : #4857da,
+    900 : #3644d3,
+    A100 : #ffffff,
+    A200 : #e9ebff,
+    A400 : #b6bcff,
+    A700 : #9ca4ff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
 $primary: mat-palette($mat-myapp-primary);
 $accent: mat-palette($mat-myapp-accent);
-$theme: mat-light-theme($primary, $accent);
+$warn: mat-palette($mat-myapp-warn);
+$theme: mat-light-theme($primary, $accent, $warn);
 
 .mat-step-icon{
     background-color: #61533f !important;

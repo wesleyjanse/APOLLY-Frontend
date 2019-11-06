@@ -12,7 +12,7 @@
       <mat-tab-group style="width: 100%;" dynamicHeight>
         <mat-tab label="Public polls">
           <div class="row">
-            <ng-container *ngFor="let p of (polls | async)">
+            <ng-container *ngFor="let p of polls">
               <div *ngIf="!p.poll.private" style="margin: 10px 0px" class="col-lg-4 col-md-6 col-sm-12">
                 <app-poll-vote style="width: 100%;" [name]="p.poll.name" [username]="p.member.username"
                   [answers]=[p.poll.answers] [creator]="p.creatorName"></app-poll-vote>

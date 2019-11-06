@@ -38,7 +38,7 @@
             <a>Login</a>
           </button>
         </a>
-        <a *ngIf="!this.userLoggedIn" routerLink="Register">
+        <a *ngIf="!this.userLoggedIn" [routerLink]="['/Register', 'test@test.com']">
           <button mat-flat-button style="margin-right: 15px;" color="primary">
             <a>Register</a>
           </button>

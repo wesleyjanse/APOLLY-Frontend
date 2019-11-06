@@ -82,9 +82,12 @@
               <mat-icon>send</mat-icon>
             </button>
           </mat-form-field>
-          <p style="font-size: 13px; font-weight: 200; color: #d6d6d6; margin-bottom: 5px;">Does your friend not have an account? <span style="cursor: pointer; color: #ffd9a3;"
+          <p *ngIf="!newFriend" style="font-size: 13px; font-weight: 200; color: #d6d6d6; margin-bottom: 5px;">Does your friend not have an account? <span style="cursor: pointer; color: #ffd9a3;"
               (click)="clickEmail()">Click here</span>
           </p>
+          <p *ngIf="newFriend" style="font-size: 13px; font-weight: 200; color: #d6d6d6; margin-bottom: 5px; text-align: right;"><span style="cursor: pointer; color: #ffd9a3;"
+            (click)="clickEmail()">Go back</span>
+        </p>
           <button mat-stroked-button matStepperPrevious>Back</button>
           <button mat-stroked-button class="ml-2" type="submit">Submit</button>
         </form>
@@ -170,7 +173,7 @@
         <form [formGroup]="membersFormGroup" (ngSubmit)="onSubmit()">
           <ng-template matStepLabel><span style="color: white;">Invite friends</span></ng-template>
           <p>Invite friends to your poll</p>
-          <mat-form-field>
+          <mat-form-field *ngIf="!newFriend"  style="width: 100%;">
             <input type="text" placeholder="Select friend" aria-label="Number" matInput [formControl]="myControl"
               [matAutocomplete]="auto">
             <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
@@ -188,8 +191,19 @@
               </ng-container>
             </mat-autocomplete>
           </mat-form-field>
-          <p style="font-size: 13px; font-weight: 200; color: #d6d6d6;">Does your friend not have an account? Click here
+          <mat-form-field *ngIf="newFriend" style="width: 100%;">
+            <input type="email" placeholder="Add user by email" aria-label="Number" matInput
+              formControlName="emailCtrl">
+            <button type="button" (click)="sendEmail()" [disabled]="!membersFormGroup.valid" matSuffix mat-button>
+              <mat-icon>send</mat-icon>
+            </button>
+          </mat-form-field>
+          <p *ngIf="!newFriend" style="font-size: 13px; font-weight: 200; color: #d6d6d6; margin-bottom: 5px;">Does your friend not have an account? <span style="cursor: pointer; color: #ffd9a3;"
+              (click)="clickEmail()">Click here</span>
           </p>
+          <p *ngIf="newFriend" style="font-size: 13px; font-weight: 200; color: #d6d6d6; margin-bottom: 5px; text-align: right;"><span style="cursor: pointer; color: #ffd9a3;"
+            (click)="clickEmail()">Go back</span>
+        </p>
           <button mat-stroked-button matStepperPrevious>Back</button>
           <button mat-stroked-button class="ml-2" type="submit">Submit</button>
         </form>

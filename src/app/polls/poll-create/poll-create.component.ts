@@ -16,6 +16,8 @@ import { FriendService } from 'src/app/friends/friend.service';
 import { Friend } from 'src/app/models/friend.model';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatSnackBar } from '@angular/material';
+import { RegisterService } from 'src/app/login/register.service';
+import { Email } from 'src/app/models/email.model';
 
 @Component({
   selector: 'snack-bar-component',
@@ -37,11 +39,19 @@ export class PollCreateComponent implements OnInit {
   membersFormGroup: FormGroup;
   private: boolean = true;
   smallScreen: boolean = false;
-  newFriend: boolean = false; 
+  newFriend: boolean = false;
 
   answers: string[] = [];
   member: Member;
-  constructor(private _snackBar: MatSnackBar, private breakpointObserver: BreakpointObserver, private _friendService: FriendService, private _formBuilder: FormBuilder, private _myPolls: MyPollsComponent, private _pollService: PollService, private _answerService: AnswerService, private _authenticateService: AuthenticateService) {
+  constructor(private _snackBar: MatSnackBar,
+    private breakpointObserver: BreakpointObserver,
+    private _registerService: RegisterService,
+    private _friendService: FriendService,
+    private _formBuilder: FormBuilder,
+    private _myPolls: MyPollsComponent,
+    private _pollService: PollService,
+    private _answerService: AnswerService,
+    private _authenticateService: AuthenticateService) {
     this._authenticateService.isLoggedin.subscribe(e => {
       if (localStorage.getItem('member') != null) {
         this.member = JSON.parse(localStorage.getItem('member'));
@@ -143,15 +153,32 @@ export class PollCreateComponent implements OnInit {
     }
   }
 
-  clickEmail(){
-    this.newFriend = true;
+  clickEmail() {
+    this.newFriend = !this.newFriend;
   }
-  
 
+  newMembers: Member[] = [];
   snackbarRef: SnackBarComponent;
-  sendEmail(){
-    this.snackbarRef = this._snackBar.open("Email invite has been sent to: " + this.membersFormGroup.get("emailCtrl").value, '', {
-      duration: 3000
+  sendEmail() {
+    let mailToSend: Email = new Email(0, this.membersFormGroup.get("emailCtrl").value, "Invited to vote on a poll", `Hi there! <br/><br/>
+
+    You have been invited by ${this.member.username}(${this.member.email}) to vote on a poll named ${this.titleFormGroup.get("titleCtrl").value}... <br/>
+    But it seems like you haven't created an account yet! <br/>
+    Feel free to create an account using this emailadres so you will be automatically added to your friends poll! <br/><br/>
+    Follow this link to create an account: <a href='http://localhost:4200/Register/${this.membersFormGroup.get("emailCtrl").value}/'>Click here!</a><br/>
+    See you soon!`)
+
+    this._registerService.sendMail(mailToSend).subscribe(() => {
+      this.snackbarRef = this._snackBar.open("Email invite has been sent to: " + this.membersFormGroup.get("emailCtrl").value, '', {
+        duration: 3000
+      });
+    })
+
+    let username = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+
+    this._registerService.addMember(new Member(0, username, "temporary", this.membersFormGroup.get("emailCtrl").value, '', false)).subscribe(result => {
+      this.newMembers.push(result);
+      console.log(result);
     });
   }
 
@@ -169,28 +196,25 @@ export class PollCreateComponent implements OnInit {
           let newPollMember = new PollMember(0, result.pollID, this.member.memberID, true, true)
           this._pollService.addPollMember(newPollMember).subscribe(
             () => {
-              if (!this.private) {
-                this._myPolls.ngOnInit();
-              }
-              else {
+              if (this.private) {
                 this.selectedFriends.forEach(friend => {
                   if (friend.friend.memberID == this.member.memberID) {
                     var newPM = new PollMember(0, result.pollID, friend.member.memberID, false, false)
                   } else {
                     var newPM = new PollMember(0, result.pollID, friend.friend.memberID, false, false)
                   }
-                  this._pollService.addPollMember(newPM).subscribe(
-                    () => {
-                      this._myPolls.ngOnInit();
-                    }
-                  );
+                  this._pollService.addPollMember(newPM).subscribe()
                 })
-              }
-            }
-          );
-        }
-      );
-    } else{
+                this.newMembers.forEach(member => {
+                  let newPMnotRegistered = new PollMember(0, result.pollID, member.memberID, false, false)
+                  this._pollService.addPollMember(newPMnotRegistered).subscribe(() => {
+                    this._myPolls.ngOnInit();
+                  })
+                })}
+                this._myPolls.ngOnInit();
+            });
+        });
+    } else {
       this._snackBar.openFromComponent(SnackBarComponent, {
         duration: 10 * 1000,
       });

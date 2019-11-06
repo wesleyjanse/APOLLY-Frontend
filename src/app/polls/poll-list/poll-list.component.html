@@ -20,10 +20,6 @@
           color="primary" mat-stroked-button>
           <mat-icon>edit</mat-icon>
         </button> &nbsp;
-        <button *ngIf="creator == loggedInUsername" matTooltip="Invite members"
-          matTooltipPosition="below" color="primary" mat-stroked-button>
-          <mat-icon>add</mat-icon>
-        </button> &nbsp;
         <button (click)="deletePoll()" *ngIf="creator == loggedInUsername" matTooltip="Delete"
           matTooltipPosition="below" color="primary" mat-stroked-button>
           <mat-icon>delete_outline</mat-icon>

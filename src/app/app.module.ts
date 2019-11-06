@@ -20,6 +20,7 @@ const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'Login', component: LoginComponent },
   { path: 'Register', component: RegisterComponent },
+  { path: 'Register/:email', component: RegisterComponent },
   { path: 'Polls', component: PollsComponent },
   { path: 'My-polls', component: MyPollsComponent },
   { path: 'Friends', component: FriendComponent },

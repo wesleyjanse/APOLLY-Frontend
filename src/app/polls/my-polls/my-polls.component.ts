@@ -19,6 +19,7 @@ export class MyPollsComponent implements OnInit {
   member: Member;
   edit: boolean = true;
   create: boolean = false;
+  CreateText: string = "Create new";
 
   constructor(private _pollService: PollService, private _authenticateService: AuthenticateService) {
     this._authenticateService.isLoggedin.subscribe(e=> {
@@ -29,7 +30,13 @@ export class MyPollsComponent implements OnInit {
   }
 
   onClickCreate(){
-    this.create = true;
+    this.create = !this.create;
+    if (this.create) {
+      this.CreateText = "Close"
+    }
+    else{
+      this.CreateText = "Create new"
+    }
   }
 
   ngOnInit() {

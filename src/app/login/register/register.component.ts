@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Member } from 'src/app/models/member.model';
-import { FormGroup, FormControl, Validators,FormBuilder, FormGroupDirective, NgForm  } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder, FormGroupDirective, NgForm } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material';
 import { RegisterService } from '../register.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -21,9 +21,17 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 export class RegisterComponent implements OnInit {
 
-  constructor(private fb: FormBuilder, private _registerService: RegisterService, private _router: Router) { }
+  constructor(private fb: FormBuilder, private _registerService: RegisterService, private _router: Router, private route: ActivatedRoute) { }
+
+  newUser: boolean = true;
 
   ngOnInit() {
+    this.route.paramMap.subscribe(params => {
+      this.registerForm.get("email").setValue(params.get("email"))
+      if (params.get("email") != null) {
+        this.newUser = false;
+      }
+    });
   }
 
   submitted: boolean = false;
@@ -40,26 +48,35 @@ export class RegisterComponent implements OnInit {
     ])
     ),
     confirmPassword: new FormControl('')
-  },{validator: this.checkPasswords });
+  }, { validator: this.checkPasswords });
 
   checkPasswords(group: FormGroup) {
     let pass = group.get('password').value;
     let confirmPass = group.get('confirmPassword').value;
     return pass === confirmPass ? null : { notSame: true }
   }
-
-  subscription = null;
+  memberToAdd: Member;
 
   onSubmit() {
     this.submitted = true;
-    let memberToAdd = new Member(0, this.registerForm.get('username').value, this.registerForm.get('password').value, this.registerForm.get('email').value, '');
-    this.subscription = this._registerService.addMember(memberToAdd).subscribe(() => {
-      this._router.navigate(['Login']);
-    });
+    if (this.newUser) {
+      this.memberToAdd = new Member(0, this.registerForm.get('username').value, this.registerForm.get('password').value, this.registerForm.get('email').value, '', true);
+      this._registerService.addMember(this.memberToAdd).subscribe(() => {
+        this._router.navigate(['Login']);
+      });
+    } else {
+      this._registerService.getWhereEmail(this.registerForm.get('email').value).subscribe((res) => {
+        this.memberToAdd = new Member(res.memberID, this.registerForm.get('username').value, this.registerForm.get('password').value, this.registerForm.get('email').value, '', true);
+        this._registerService.updateMember(res.memberID,this.memberToAdd).subscribe(() => {
+          this._router.navigate(['Login']);
+        });
+      });
+    }
+
   }
 
 
-  
-  model: Member = new Member(0, '', '', '', '');
+
+  model: Member = new Member(0, '', '', '', '', true);
   matcher = new MyErrorStateMatcher();
 }

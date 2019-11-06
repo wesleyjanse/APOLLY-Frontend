@@ -13,25 +13,33 @@ import { Member } from 'src/app/models/member.model';
 })
 export class PollsComponent implements OnInit {
 
-  polls: Observable<PollMember[]>;
+  polls: PollMember[];
   privatePolls: PollMember[];
   member: Member;
-
+  creator: Member;
   constructor(private _pollService: PollService, private fb: FormBuilder, private _authenticateService: AuthenticateService) {
     this._authenticateService.isLoggedin.subscribe(e => {
       if (localStorage.getItem('member') != null) {
         this.member = JSON.parse(localStorage.getItem('member'));
       }
     });
-    this.polls = this._pollService.getPolls();
+    this._pollService.getPolls().subscribe((result) => {
+      this.polls = result;
+      this.polls.forEach(poll => {
+        if (!poll.poll.Private) {
+          this._pollService.getCreatorFromPoll(poll.pollID).subscribe((result) => {
+            this.creator = result;
+            poll.creatorName = this.creator.username;
+        }); 
+        }
+      })
+    });
     this._pollService.getPollsByMemberID(this.member.memberID).subscribe((result) => {
-      var creator: Member;
       this.privatePolls = result
-      console.log(this.privatePolls);
       this.privatePolls.forEach(element => {
         this._pollService.getCreatorFromPoll(element.pollID).subscribe((result) => {
-            creator = result;
-            element.creatorName = creator.username;
+            this.creator = result;
+            element.creatorName = this.creator.username;
         }); 
       });
     });
