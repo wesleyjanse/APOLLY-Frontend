@@ -8,7 +8,8 @@ import { Router } from '@angular/router';
 import { MyPollsComponent } from '../my-polls/my-polls.component';
 import { AuthenticateService } from 'src/app/login/services/authenticate.service';
 import { Standing } from 'src/app/models/standings.model';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
+import { SnackBarComponent } from 'src/app/friends/friend/friend.component';
 
 export interface DialogData {
   titel: string;
@@ -48,8 +49,9 @@ export class PollListComponent implements OnInit {
   pollOptions: Array<Standing> = [];
   edit: boolean = false;
   editForm: FormGroup;
+  snackbarRef: SnackBarComponent;
 
-  constructor(public dialog: MatDialog, private _authenticateService: AuthenticateService, private _pollService: PollService, private fb: FormBuilder, private _pollSerivce: PollService, private _router: Router, private _myPollsComponent: MyPollsComponent) {
+  constructor(private _snackBar: MatSnackBar , public dialog: MatDialog, private _authenticateService: AuthenticateService, private _pollService: PollService, private fb: FormBuilder, private _pollSerivce: PollService, private _router: Router, private _myPollsComponent: MyPollsComponent) {
     this.editForm = this.fb.group({
       title: new FormControl('', Validators.compose(
         [Validators.minLength(5), Validators.required])),
@@ -79,6 +81,7 @@ export class PollListComponent implements OnInit {
   onEditClick() {
     this.edit = true;
   }
+
   onCancelClick() {
     this.edit = false;
   }
@@ -92,6 +95,9 @@ export class PollListComponent implements OnInit {
     dialogRef.afterClosed().subscribe(
       (result) => {
         if (result) {
+          this.snackbarRef = this._snackBar.open("Poll has been deleted!", '', {
+            duration: 3000
+          });
           this._pollSerivce.deletePoll(this.pollID).subscribe(
             () => {
               this._myPollsComponent.ngOnInit();

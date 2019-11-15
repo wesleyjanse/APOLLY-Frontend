@@ -15,4 +15,12 @@ export class AuthenticateService {
   authenticate(memberLogin: MemberLogin): Observable<Member> {
     return this._httpClient.post<Member>("https://localhost:44371/api/Member/authenticate", memberLogin);
   }
+
+  checkLoggedIn() {
+    if (localStorage.getItem("token")) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

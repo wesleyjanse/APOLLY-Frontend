@@ -30,6 +30,7 @@ export class PollVoteComponent implements OnInit {
   onResize(event) {
     this.pollTitleFontSize = (event.target.innerWidth <= 450) ? true : false;
   }
+
   @Input() name: string;
   @Input() username: string;
   @Input() answers: Observable<Answer[]>;
@@ -38,14 +39,16 @@ export class PollVoteComponent implements OnInit {
   submitted: boolean = false;
   pollID: number;
   member: Member;
-  answerForm = this.fb.group({
-    chosenAnswer: new FormControl('', Validators.required)
-  });
-
   poll: Poll;
   alreadyVoted: boolean = false;
   pollTitleFontSize: boolean = false;
   pollOptions: Array<Standing> = [];
+  
+  answerForm = this.fb.group({
+    chosenAnswer: new FormControl('', Validators.required)
+  });
+
+
 
   onSubmit() {
     this.pollID = this.answers[0][0].pollID;

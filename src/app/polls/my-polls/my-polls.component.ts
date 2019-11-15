@@ -40,6 +40,7 @@ export class MyPollsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.CreateText = "Create new"
     this.polls = this._pollService.getPollsByMemberID(this.member.memberID);
   }
 }

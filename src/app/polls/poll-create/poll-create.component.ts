@@ -40,9 +40,15 @@ export class PollCreateComponent implements OnInit {
   private: boolean = true;
   smallScreen: boolean = false;
   newFriend: boolean = false;
-
+  newMembers: Member[] = [];
+  snackbarRef: SnackBarComponent;
   answers: string[] = [];
   member: Member;
+  myControl = new FormControl();
+  options: Friend[] = [];
+  filteredOptions: Observable<Friend[]>;
+  selectedFriends: Friend[] = [];
+
   constructor(private _snackBar: MatSnackBar,
     private breakpointObserver: BreakpointObserver,
     private _registerService: RegisterService,
@@ -52,11 +58,13 @@ export class PollCreateComponent implements OnInit {
     private _pollService: PollService,
     private _answerService: AnswerService,
     private _authenticateService: AuthenticateService) {
+
     this._authenticateService.isLoggedin.subscribe(e => {
       if (localStorage.getItem('member') != null) {
         this.member = JSON.parse(localStorage.getItem('member'));
       }
     });
+
     breakpointObserver.observe([
       Breakpoints.XSmall,
       Breakpoints.Small
@@ -72,10 +80,6 @@ export class PollCreateComponent implements OnInit {
   onDragChange() {
     this.private = !this.private;
   }
-
-  myControl = new FormControl();
-  options: Friend[] = [];
-  filteredOptions: Observable<Friend[]>;
 
   private _filter(value: string): Friend[] {
     const filterValue = value.toLocaleLowerCase();
@@ -131,8 +135,6 @@ export class PollCreateComponent implements OnInit {
     }
   }
 
-  selectedFriends: Friend[] = [];
-
   clearItems(v) {
     for (let a of v) {
       var index: number = this.selectedFriends.indexOf(a.value, 0);
@@ -157,8 +159,6 @@ export class PollCreateComponent implements OnInit {
     this.newFriend = !this.newFriend;
   }
 
-  newMembers: Member[] = [];
-  snackbarRef: SnackBarComponent;
   sendEmail() {
     let mailToSend: Email = new Email(0, this.membersFormGroup.get("emailCtrl").value, "Invited to vote on a poll", `Hi there! <br/><br/>
 
@@ -208,19 +208,20 @@ export class PollCreateComponent implements OnInit {
                 this.newMembers.forEach(member => {
                   let newPMnotRegistered = new PollMember(0, result.pollID, member.memberID, false, false)
                   this._pollService.addPollMember(newPMnotRegistered).subscribe(() => {
-                    this._myPolls.ngOnInit();
                   })
-                })}
-                this._myPolls.ngOnInit();
+                })
+              }
+              this._myPolls.ngOnInit();
             });
         });
+      this.snackbarRef = this._snackBar.open("Poll: \"" + this.titleFormGroup.get("titleCtrl").value + "\" has been created!", '', {
+        duration: 3000
+      });
     } else {
       this._snackBar.openFromComponent(SnackBarComponent, {
         duration: 10 * 1000,
       });
     }
-
     this._myPolls.create = false;
-    this._myPolls.ngOnInit;
   }
 }

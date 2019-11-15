@@ -27,6 +27,11 @@ export class FriendComponent implements OnInit {
   member: Member;
   options: Friend[] = [];
   optionsMember: Member[] = [];
+  snackbarRef: SnackBarComponent;
+  alreadyRequested: boolean;
+  myControl = new FormControl();
+  filteredOptions: Observable<Friend[]>;
+  filteredMemberOptions: Observable<Member[]>;
 
   constructor(private _snackBar: MatSnackBar, private _notificationService: NotificationService, private fb: FormBuilder, private _friendService: FriendService, private _authenticateService: AuthenticateService, private _memberService: MemberService) {
     this._authenticateService.isLoggedin.subscribe(e => {
@@ -36,9 +41,6 @@ export class FriendComponent implements OnInit {
     });
   }
 
-  myControl = new FormControl();
-  filteredOptions: Observable<Friend[]>;
-  filteredMemberOptions: Observable<Member[]>;
   addForm = this.fb.group({
     addControl: new FormControl('', Validators.compose([
       Validators.minLength(4)
@@ -74,13 +76,11 @@ export class FriendComponent implements OnInit {
       );
   }
 
-  alreadyRequested: boolean;
   addUser() {
     this._memberService.getWhereName(this.addForm.get("addControl").value).subscribe((res) => {
       let durationInSeconds = 5;
       let newFriend = new Friend(0, this.member.memberID, res.memberID, false);
       this.alreadyRequested = false
-      
 
       this.options.forEach(o => {
         if (o.friend.username === res.username || o.member.username === res.username) {
@@ -99,12 +99,14 @@ export class FriendComponent implements OnInit {
     })
   }
 
-  onClickCancel(friendsID: number) {
+  onClickCancel(friendsID: number, username: string) {
     this._notificationService.cancelRequest(friendsID).subscribe(() => {
+      this.snackbarRef = this._snackBar.open("Friendrequest to " + username + " has been canceled.", '', {
+        duration: 3000
+      });
       this.ngOnInit();
     });
   }
-
 
   private _filter(value: string): Friend[] {
     const filterValue = value.toLocaleLowerCase();

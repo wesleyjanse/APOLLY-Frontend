@@ -22,8 +22,11 @@ export class RegisterService {
     return this._httpClient.get<Member>("https://localhost:44371/api/member/getWhereEmail/" + email)
   }
 
-  updateMember(memberID: number, member: Member){
+  updateMember(memberID: number, member: Member): Observable<Member>{
     return this._httpClient.put<Member>("https://localhost:44371/api/member/" + memberID, member)
+  }
 
+  getWhereID(memberID: number){
+    return this._httpClient.get<Member>("https://localhost:44371/api/member/" + memberID);
   }
 }

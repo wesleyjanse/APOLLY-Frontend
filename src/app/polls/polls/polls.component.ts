@@ -17,12 +17,14 @@ export class PollsComponent implements OnInit {
   privatePolls: PollMember[];
   member: Member;
   creator: Member;
+
   constructor(private _pollService: PollService, private fb: FormBuilder, private _authenticateService: AuthenticateService) {
     this._authenticateService.isLoggedin.subscribe(e => {
       if (localStorage.getItem('member') != null) {
         this.member = JSON.parse(localStorage.getItem('member'));
       }
     });
+
     this._pollService.getPolls().subscribe((result) => {
       this.polls = result;
       this.polls.forEach(poll => {
@@ -34,6 +36,7 @@ export class PollsComponent implements OnInit {
         }
       })
     });
+    
     this._pollService.getPollsByMemberID(this.member.memberID).subscribe((result) => {
       this.privatePolls = result
       this.privatePolls.forEach(element => {

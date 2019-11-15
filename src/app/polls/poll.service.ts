@@ -11,7 +11,9 @@ export class PollService {
   constructor(private _httpClient: HttpClient) { }
 
   getPolls(): Observable<PollMember[]> {
-    return this._httpClient.get<PollMember[]>("https://localhost:44371/api/pollmembers");
+    return this._httpClient.get<PollMember[]>("https://localhost:44371/api/pollmembers", {
+      headers: new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("token"))
+      });
   }
 
   getPollsByMemberID(memberID: number): Observable<PollMember[]>{

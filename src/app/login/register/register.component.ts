@@ -24,6 +24,10 @@ export class RegisterComponent implements OnInit {
   constructor(private fb: FormBuilder, private _registerService: RegisterService, private _router: Router, private route: ActivatedRoute) { }
 
   newUser: boolean = true;
+  submitted: boolean = false;
+  memberToAdd: Member;
+  model: Member = new Member(0, '', '', '', '', true);
+  matcher = new MyErrorStateMatcher();
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -33,8 +37,6 @@ export class RegisterComponent implements OnInit {
       }
     });
   }
-
-  submitted: boolean = false;
 
   registerForm = this.fb.group({
     username: new FormControl('', Validators.required),
@@ -55,7 +57,6 @@ export class RegisterComponent implements OnInit {
     let confirmPass = group.get('confirmPassword').value;
     return pass === confirmPass ? null : { notSame: true }
   }
-  memberToAdd: Member;
 
   onSubmit() {
     this.submitted = true;
@@ -72,11 +73,5 @@ export class RegisterComponent implements OnInit {
         });
       });
     }
-
   }
-
-
-
-  model: Member = new Member(0, '', '', '', '', true);
-  matcher = new MyErrorStateMatcher();
 }

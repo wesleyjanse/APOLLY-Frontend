@@ -38,7 +38,7 @@
             <mat-icon matListIcon>perm_identity</mat-icon>
             <h3 matLine> {{ f.friend.username }} </h3>
             <p matLine> {{ f.friend.email }}</p>
-            <button (click)="onClickCancel(f.friendsID)"  matTooltip="Delete friend" matTooltipPosition="above" mat-stroked-button>
+            <button (click)="onClickCancel(f.friendsID, f.friend.username)"  matTooltip="Delete friend" matTooltipPosition="above" mat-stroked-button>
               <mat-icon>delete</mat-icon>
             </button>
             <mat-divider></mat-divider>
@@ -47,7 +47,7 @@
             <mat-icon matListIcon>perm_identity</mat-icon>
             <h3 matLine> {{ f.member.username }} </h3>
             <p matLine> {{ f.member.email }}</p>
-            <button (click)="onClickCancel(f.friendsID)"  matTooltip="Delete friend" matTooltipPosition="above" mat-stroked-button>
+            <button (click)="onClickCancel(f.friendsID, f.member.username)"  matTooltip="Delete friend" matTooltipPosition="above" mat-stroked-button>
               <mat-icon>delete</mat-icon>
             </button>
             <mat-divider></mat-divider>

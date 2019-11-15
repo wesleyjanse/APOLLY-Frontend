@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/cd05d024-610f-4c20-8e80-98cd57ac20df/resourceGroups/Recources2019/providers/Microsoft.Web/sites/Apolly",
+    "appService.deploySubpath": "dist\\Apolly"
+}
