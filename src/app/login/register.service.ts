@@ -11,22 +11,22 @@ export class RegisterService {
   constructor(private _httpClient: HttpClient) { }
 
   addMember(member: Member){
-    return this._httpClient.post<Member>("https://localhost:44371/api/member", member);
+    return this._httpClient.post<Member>("https://apolly-backend20191125052638.azurewebsites.net/api/member", member);
   }
 
   sendMail(email: Email){
-    return this._httpClient.post<Email>("https://localhost:44371/api/member/sendmail", email);
+    return this._httpClient.post<Email>("https://apolly-backend20191125052638.azurewebsites.net/api/member/sendmail", email);
   }
 
   getWhereEmail(email: string): Observable<Member>{
-    return this._httpClient.get<Member>("https://localhost:44371/api/member/getWhereEmail/" + email)
+    return this._httpClient.get<Member>("https://apolly-backend20191125052638.azurewebsites.net/api/member/getWhereEmail/" + email)
   }
 
   updateMember(memberID: number, member: Member): Observable<Member>{
-    return this._httpClient.put<Member>("https://localhost:44371/api/member/" + memberID, member)
+    return this._httpClient.put<Member>("https://apolly-backend20191125052638.azurewebsites.net/api/member/" + memberID, member)
   }
 
   getWhereID(memberID: number){
-    return this._httpClient.get<Member>("https://localhost:44371/api/member/" + memberID);
+    return this._httpClient.get<Member>("https://apolly-backend20191125052638.azurewebsites.net/api/member/" + memberID);
   }
 }

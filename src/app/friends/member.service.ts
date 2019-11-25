@@ -11,10 +11,10 @@ export class MemberService {
   constructor(private _httpClient: HttpClient) { }
 
   getAll(): Observable<Member[]>{
-    return this._httpClient.get<Member[]>("https://localhost:44371/api/member");
+    return this._httpClient.get<Member[]>("https://apolly-backend20191125052638.azurewebsites.net/api/member");
   }
 
   getWhereName(username: string){
-    return this._httpClient.get<Member>("https://localhost:44371/api/member/getWhereName/" + username)
+    return this._httpClient.get<Member>("https://apolly-backend20191125052638.azurewebsites.net/api/member/getWhereName/" + username)
   }
 }

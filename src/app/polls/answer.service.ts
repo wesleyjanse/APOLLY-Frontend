@@ -11,6 +11,6 @@ export class AnswerService {
   constructor(private _httpClient: HttpClient) { }
 
   addAnswer(answer: Answer): Observable<Answer>{
-    return this._httpClient.post<Answer>("https://localhost:44371/api/Answer/", answer);
+    return this._httpClient.post<Answer>("https://apolly-backend20191125052638.azurewebsites.net/api/Answer/", answer);
   }
 }

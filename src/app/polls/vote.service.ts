@@ -11,6 +11,6 @@ export class VoteService {
   constructor(private _httpClient: HttpClient) { }
 
   addVote(vote: Vote){
-    return this._httpClient.post<Vote>("https://localhost:44371/api/vote", vote);
+    return this._httpClient.post<Vote>("https://apolly-backend20191125052638.azurewebsites.net/api/vote", vote);
   }
 }

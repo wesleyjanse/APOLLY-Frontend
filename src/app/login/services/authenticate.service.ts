@@ -13,7 +13,7 @@ export class AuthenticateService {
 
   constructor(private _httpClient: HttpClient) { }
   authenticate(memberLogin: MemberLogin): Observable<Member> {
-    return this._httpClient.post<Member>("https://localhost:44371/api/Member/authenticate", memberLogin);
+    return this._httpClient.post<Member>("https://apolly-backend20191125052638.azurewebsites.net/api/Member/authenticate", memberLogin);
   }
 
   checkLoggedIn() {

@@ -22,9 +22,11 @@ export class AppComponent {
         this.userLoggedIn = !this.userLoggedIn;
         this.member = JSON.parse(localStorage.getItem('member'));
         setInterval(() => {
-          this._notificationService.getNotificationCount(this.member.memberID).subscribe((result => {
-            this.notificationCount = result;
-          }))
+          if (this._authenticateService.checkLoggedIn) {
+            this._notificationService.getNotificationCount(this.member.memberID).subscribe((result => {
+              this.notificationCount = result;
+            }))
+          }
         }, 1 * 1000)
       }
     });

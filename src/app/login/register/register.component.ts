@@ -32,7 +32,9 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
       this.registerForm.get("email").setValue(params.get("email"))
-      if (params.get("email") != null) {
+      console.log(params.get("email"))
+      if (params.get("email") != null && params.get("email") != "") {
+        console.log("yes")
         this.newUser = false;
       }
     });
@@ -59,7 +61,7 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
-    this.submitted = true;
+    console.log(this.newUser);
     if (this.newUser) {
       this.memberToAdd = new Member(0, this.registerForm.get('username').value, this.registerForm.get('password').value, this.registerForm.get('email').value, '', true);
       this._registerService.addMember(this.memberToAdd).subscribe(() => {

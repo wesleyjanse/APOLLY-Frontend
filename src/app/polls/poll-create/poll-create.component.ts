@@ -165,7 +165,7 @@ export class PollCreateComponent implements OnInit {
     You have been invited by ${this.member.username}(${this.member.email}) to vote on a poll named ${this.titleFormGroup.get("titleCtrl").value}... <br/>
     But it seems like you haven't created an account yet! <br/>
     Feel free to create an account using this emailadres so you will be automatically added to your friends poll! <br/><br/>
-    Follow this link to create an account: <a href='http://localhost:4200/Register/${this.membersFormGroup.get("emailCtrl").value}/'>Click here!</a><br/>
+    Follow this link to create an account: <a href='https://apolly.azurewebsites.net/Register/${this.membersFormGroup.get("emailCtrl").value}/'>Click here!</a><br/>
     See you soon!`)
 
     this._registerService.sendMail(mailToSend).subscribe(() => {
@@ -174,6 +174,7 @@ export class PollCreateComponent implements OnInit {
       });
     })
 
+	//Random username 
     let username = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 
     this._registerService.addMember(new Member(0, username, "temporary", this.membersFormGroup.get("emailCtrl").value, '', false)).subscribe(result => {
